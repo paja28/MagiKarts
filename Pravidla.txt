@@ -1,13 +1,16 @@
 PRAVIDLA:
 ----------
 Maximální počet vyložených karet je 5
+Každé kolo se může vykládat 1 karta
+Hráč má maximálně 5 karet
+
 Každá postava kromě kouzel má: HP, DMG, PTS, SEF, CLS
 
-HP  = životy karty: kolik má karta životů, při HP < 0 = karta mizí a připisují se body protihráči
+HP  = životy karty: kolik má karta životů, při HP <= 0 = karta mizí a připisují se body protihráči
 DMG = útok: kolik životů karta ubere jiné
-PTS = boby karty: poražení karty s větším PTS znamená více bodů pro výhru hry
+PTS = body karty: poražení karty s větším PTS znamená více bodů pro výhru hry
 SEF = speciální efekty: jed, pasivní lěčení, oslabení
-CLS = typ jednotky: mág, lehkooděnec, těžkooděnec
+CLS = typ jednotky: mág, lehkooděnec, těžkooděnec      //možná ještě nějaký classy
 
 
 FÁZE KOLA:
