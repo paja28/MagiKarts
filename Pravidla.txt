@@ -1,0 +1,30 @@
+PRAVIDLA:
+----------
+Maximální počet vyložených karet je 5
+Každé kolo se může vykládat 1 karta
+Hráč má maximálně 5 karet
+
+Každá postava kromě kouzel má: HP, DMG, PTS, SEF, CLS
+
+HP  = životy karty: kolik má karta životů, při HP <= 0 = karta mizí a připisují se body protihráči
+DMG = útok: kolik životů karta ubere jiné
+PTS = body karty: poražení karty s větším PTS znamená více bodů pro výhru hry
+SEF = speciální efekty: jed, pasivní lěčení, oslabení
+CLS = typ jednotky: mág, lehkooděnec, těžkooděnec      //možná ještě nějaký classy
+
+
+FÁZE KOLA:
+----------
+1. dobrání karet
+2. vybrání akce karet (útok)
+3. vybrání akce karet (léčení)
+4. provedení efektů (prvně hráč, potom soupeř)
+5. provedení útoku  (prvně hráč, potom soupeř)
+6. provedení léčení (prvně hráč, potom soupeř)
+
+PRŮBĚH HRY:
+-----------
+Bude 10 kol, v každém se provedou fáze
+Za zabití karet protivníka hráč obdrží jejich body
+Za zabití karet hráče protivník obdrží jejich body
+Až bude počet kol na nule, automaticky vyhrává hráč s vyššími body
