@@ -1,6 +1,6 @@
 PRAVIDLA:
 ----------
-Maximální počet vyložených karet je 5
+Maximální počet vyložených karet je 4
 Každé kolo se může vykládat 1 karta
 Hráč má maximálně 5 karet
 
