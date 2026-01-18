@@ -4,10 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
     <title>MagiKarts</title>
-    
+    <style>
+        div{
+            margin-left:10vw;
+            margin-right:10vw;
+            display:grid;
+            grid-template-columns:repeat(5,15%);
+            column-gap:5%;
+        }
+        .karty{
+            width:10vw;
+            height:10vh;
+            transition: height 0.5s;
+        }
+        .karty:hover{
+            /*Když se přes něco přejede*/
+            animation-name: vysunuti_karty;
+            animation-duration:0.5s;
+            position:relative;
+            animation-fill-mode:forwards;
+        }
+        .karty:active{
+            /*Když se na něčem drží tlačítko, tak se to vykonává*/
+        }
+
+        .zakliknuta_karta{
+            width:10vw;
+            height:10vh;
+            margin-top:60px;
+        }
+        @keyframes vysunuti_karty{                  /*Když se přejede přes kartu, karta se vysune dopředu*/
+            from  {top:0px;}
+            to    {top:30px;}
+        }
+
+        #karta1{
+
+        }
+        #karta2{
+            
+        }
+        #karta3{
+            
+        }
+        #karta4{
+            
+        }
+        #karta5{
+            
+        }
+    </style>
 </head>
 <body>
+<div>
+<img id="karta1" class="karty" onclick="nakliknuto('karta1')" src="C:\Users\Pavel_Dvořák\Desktop\MagiKarts\spartan.jpg">
+<img id="karta2" class="karty" onclick="nakliknuto('karta2')" src="C:\Users\Pavel_Dvořák\Desktop\MagiKarts\spartan.jpg">
+<img id="karta3" class="karty" onclick="nakliknuto('karta3')" src="C:\Users\Pavel_Dvořák\Desktop\MagiKarts\spartan.jpg">
+<img id="karta4" class="karty" onclick="nakliknuto('karta4')" src="C:\Users\Pavel_Dvořák\Desktop\MagiKarts\spartan.jpg">
+<img id="karta5" class="karty" onclick="nakliknuto('karta5')" src="C:\Users\Pavel_Dvořák\Desktop\MagiKarts\spartan.jpg">
+</div>
+<script>
+    var je_zakliknuta_karta =false;
+    var zakliknuta_karta = null;
+    function nakliknuto(id){
+        let karta = document.getElementById(id);
+        
+        //karta.classList.toggle("zakliknuta_karta");       
+        //karta.classList.toggle("karty");              Nefunguje, nevím proč
+        
+        if(!je_zakliknuta_karta)
+        {
+            je_zakliknuta_karta=true;
+            zakliknuta_karta = id;
+            karta.classList.add("zakliknuta_karta");
+            karta.classList.remove("karty");
+        }
+        else{
+            if(zakliknuta_karta==id)  {          //kontrola jestli hráč kliknul na již vysunutou kartu
+                je_zakliknuta_karta=false;
+                karta.classList.remove("zakliknuta_karta");
+                karta.classList.add("karty");
+                zakliknuta_karta ="";
+            }
+            else
+            {
+                document.getElementById(zakliknuta_karta).classList.add("karty");
+                document.getElementById(zakliknuta_karta).classList.remove("zakliknuta_karta");
+                karta.classList.add("zakliknuta_karta");
+                karta.classList.remove("karty");
+                zakliknuta_karta = id;
+            }
+        }
+            
+    }
 
-
+    //zasunutí karty pomocí javascriptu
+    const karta1 = document.getElementById("karta1");
+    const karta2 = document.getElementById("karta2");
+    const karta3 = document.getElementById("karta3");
+    const karta4 = document.getElementById("karta4");
+    const karta5 = document.getElementById("karta5");
+</script>
 </body>
 </html>
