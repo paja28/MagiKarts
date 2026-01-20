@@ -37,7 +37,21 @@
 <img id="karta2" class="karty vysouvani_karet" onclick="nakliknuto('karta2')" src="spartan.jpg">
 <img id="karta3" class="karty vysouvani_karet" onclick="nakliknuto('karta3')" src="spartan.jpg">
 <img id="karta4" class="karty vysouvani_karet" onclick="nakliknuto('karta4')" src="spartan.jpg">
-<img id="karta5" class="karty vysouvani_karet" onclick="nakliknuto('karta5')" src="spartan.jpg">
+<!--<img id="karta5" class="karty vysouvani_karet" onclick="nakliknuto('karta5')" src="spartan.jpg"> -->
 </div>
+
+<div id="pridavani_karet" onclick="pridani_karty()">Klikni</div>
+
+<script>
+    function pridani_karty(){
+        const karty_hrace = document.getElementById("hracovy_karty");
+        const nova_karta = document.createElement("img");
+        nova_karta.setAttribute("class","karty vysouvani_karet");
+        nova_karta.setAttribute("id","karta5");
+        nova_karta.setAttribute("onclick","nakliknuto('karta5')");
+        nova_karta.setAttribute("src","spartan.jpg");
+        karty_hrace.appendChild(nova_karta);           
+    }
+</script>
 </body>
 </html>
