@@ -89,3 +89,22 @@
             text-align: center;
             cursor:pointer;
         }
+        .prazdne_misto{
+            width: 10vw;
+            height: 10vh;
+            background-color:gray;
+            text-align:center;
+        }
+
+        #pole_karta1{
+            order: 1;
+        }
+        #pole_karta2{
+            order:2;
+        }
+        #pole_karta3{
+            order:3;
+        }
+        #pole_karta4{
+            order: 4;
+        }
