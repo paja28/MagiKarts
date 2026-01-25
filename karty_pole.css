@@ -1,4 +1,4 @@
-#protivnikovy_karty{
+#protihracovy_karty{
             margin-left:10vw;
             margin-right:10vw;
             display:grid;
@@ -58,6 +58,11 @@
             /*Když se přes něco přejede*/
             transform: translateY(-30px);
         }
+        .vysouvani_karet_protihrace{
+            transition: transform 0.5s;
+            transform: translateY(30px);
+        }
+
         .karty:active{
             /*Když se na něčem drží tlačítko, tak se to vykonává*/
         }
@@ -88,4 +93,36 @@
             background-color: gray;
             text-align: center;
             cursor:pointer;
+        }
+        .prazdne_misto{
+            width: 10vw;
+            height: 10vh;
+            background-color:gray;
+            text-align:center;
+        }
+
+        #pole_karta1{
+            order: 1;
+        }
+        #pole_karta2{
+            order:2;
+        }
+        #pole_karta3{
+            order:3;
+        }
+        #pole_karta4{
+            order: 4;
+        }
+
+        #protihrac_pole_karta1{
+            order: 1;
+        }
+        #protihrac_pole_karta2{
+            order:2;
+        }
+        #protihrac_pole_karta3{
+            order:3;
+        }
+        #protihrac_pole_karta4{
+            order: 4;
         }
