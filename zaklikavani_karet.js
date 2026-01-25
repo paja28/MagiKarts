@@ -111,18 +111,18 @@
         let random_karta = document.getElementById(id_random_karta);
         pole_karet_protihrace.splice(random-1,1);
         random_karta.classList.add("vysouvani_karet_protihrace");
-        //přidat 0.5 sekundy timeout
-        //přidat 0.5 sekundy timeout
-        //přidat 0.5 sekundy timeout
-        //přidat 0.5 sekundy timeout 
-        //přidat 0.5 sekundy timeout
-        protihrac_presunuti_karty(random_karta);
+        const zpozdeni = setTimeout(protihrac_presunuti_karty, 1000);F
         }
     }
-    
-    function protihrac_presunuti_karty(presouvaci_karta){
+
+    function protihrac_presunuti_karty(){
         const protihrac_prazdne_misto = protihrac_pole_chybejicich_karet.splice(0,1);
-        const Protihrac_presunuta_karta = presouvaci_karta;
-        presouvaci_karta.remove();
-        protihrac_prazdne_misto.remove();
+        const karta_na_vymazani = document.querySelector(".vysouvani_karet_protihrace");
+        console.log(karta_na_vymazani);
+        const protihrac_presunuta_karta = karta_na_vymazani;
+        const protihracovo_pole_vykladani_karet = document.getElementById("pole_vykladani_protivnika");
+        karta_na_vymazani.remove();//vymazání karty u hráče
+        document.getElementById(protihrac_prazdne_misto).remove();//vymazání prázdného místa na středu
+        protihrac_presunuta_karta.classList.remove("vysouvani_karet_protihrace")
+        protihracovo_pole_vykladani_karet.append(protihrac_presunuta_karta);
     }
