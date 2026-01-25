@@ -1,7 +1,8 @@
     var je_zakliknuta_karta =false;
     var zakliknuta_karta = null;
     var pole_chybejicich_karet = [];
-
+    var pole_karet_protihrace =["protihrac_karta1","protihrac_karta2","protihrac_karta3","protihrac_karta4","protihrac_karta5"];
+    var protihrac_pole_chybejicich_karet = ["protihrac_pole_karta1","protihrac_pole_karta2","protihrac_pole_karta3","protihrac_pole_karta4"];
     function nakliknuto(id){
         let karta = document.getElementById(id);
         let prazdna_mista;
@@ -77,6 +78,9 @@
             hracovo_pole_vykladani.append(presunuta_karta);
             je_zakliknuta_karta=false;
             zakliknuta_karta=null;
+
+            //tady začíná hrát protihráč
+            protihrac_vybrani_random_karty();
         }
         else
             console.log("Chyba, zakliknuta_karta je rovna null. Ve funkci presunuti_karty()");
@@ -98,4 +102,27 @@
         else{
            document.getElementById("pridavani_karet").removeAttribute("onclick");
         }    
+    }
+
+    function protihrac_vybrani_random_karty(){
+        if(protihrac_pole_chybejicich_karet.length>0){      //Kontrola, jestli je na středě místo
+        let random = Math.floor(Math.random() * pole_karet_protihrace.length)+1;
+        let id_random_karta = pole_karet_protihrace[random-1];
+        let random_karta = document.getElementById(id_random_karta);
+        pole_karet_protihrace.splice(random-1,1);
+        random_karta.classList.add("vysouvani_karet_protihrace");
+        //přidat 0.5 sekundy timeout
+        //přidat 0.5 sekundy timeout
+        //přidat 0.5 sekundy timeout
+        //přidat 0.5 sekundy timeout 
+        //přidat 0.5 sekundy timeout
+        protihrac_presunuti_karty(random_karta);
+        }
+    }
+    
+    function protihrac_presunuti_karty(presouvaci_karta){
+        const protihrac_prazdne_misto = protihrac_pole_chybejicich_karet.splice(0,1);
+        const Protihrac_presunuta_karta = presouvaci_karta;
+        presouvaci_karta.remove();
+        protihrac_prazdne_misto.remove();
     }
