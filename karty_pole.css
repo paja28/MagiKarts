@@ -1,4 +1,4 @@
-#protivnikovy_karty{
+#protihracovy_karty{
             margin-left:10vw;
             margin-right:10vw;
             display:grid;
@@ -58,6 +58,11 @@
             /*Když se přes něco přejede*/
             transform: translateY(-30px);
         }
+        .vysouvani_karet_protihrace{
+            transition: transform 0.5s;
+            transform: translateY(30px);
+        }
+
         .karty:active{
             /*Když se na něčem drží tlačítko, tak se to vykonává*/
         }
