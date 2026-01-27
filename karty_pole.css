@@ -1,91 +1,135 @@
 #protivnikovy_karty{
-            margin-left:10vw;
-            margin-right:10vw;
-            display:grid;
-            grid-template-columns:repeat(5,15%);
-            column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:10vh;
-            width: 60vw;
-            place-self:center;
-            border: 2px solid red;
-        }
-        #hracovy_karty{
-            margin-left:10vw;
-            margin-right:10vw;
-            display:grid;
-            grid-template-columns:repeat(5,15%);
-            column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:80vh;
-            width: 60vw;
-            place-self:center;
-            border: 2px solid blue;
-        }
-        #pole_vykladani_protivnika{
-            margin-left:10vw;
-            margin-right:10vw;
-            display:grid;
-            grid-template-columns:repeat(4,20%);
-            column-gap:8%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:35vh;
-            width: 60vw;
-            place-self:center;
-            border: 2px solid red;
-        }
-        #pole_vykladani_hrace{
-            margin-left:10vw;
-            margin-right:10vw;
-            display:grid;
-            grid-template-columns:repeat(4,20%);
-            column-gap:8%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:55vh;
-            width: 60vw;
-            place-self:center;
-            border: 2px solid blue;
-        }
-        .karty{
-            width:10vw;
-            height:10vh;
-            cursor:pointer;
-        }
-        .vysouvani_karet{
-            transition: transform 0.5s;
-        }
-         .vysouvani_karet:hover{
-            /*Když se přes něco přejede*/
-            transform: translateY(-30px);
-        }
-        .karty:active{
-            /*Když se na něčem drží tlačítko, tak se to vykonává*/
-        }
-
-        .zakliknuta_karta{
-            margin-top:-60px;
-        }
-
-        #karta1{
-
-        }
-        #karta2{
-            
-        }
-        #karta3{
-            
-        }
-        #karta4{
-            
-        }
-        #karta5{
-            
-        }
-        #pridavani_karet{
-            border:3px solid black;
-            width:300px;
-            height:500px;
-            background-color: gray;
-            text-align: center;
-            cursor:pointer;
-        }
+    margin-left:10vw;
+    margin-right:10vw;
+    display:grid;
+    grid-template-columns:repeat(5,15%);
+    column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
+    position: fixed;
+    top:10vh;
+    width: 60vw;
+    place-self:center;
+    border: 2px solid red;
+    }
+#hracovy_karty{
+     margin-left:10vw;
+     margin-right:10vw;
+     display:grid;
+     grid-template-columns:repeat(5,15%);
+     column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
+     position: fixed;
+     top:80vh;
+     width: 60vw;
+     place-self:center;
+     border: 2px solid blue;
+ }
+#pole_vykladani_protivnika{
+      margin-left:10vw;
+      margin-right:10vw;
+      display:grid;
+      grid-template-columns:repeat(4,20%);
+      column-gap:8%; /*Dodělat, aby to pasovalo s divem */
+      position: fixed;
+      top:35vh;
+      width: 60vw;
+     place-self:center;
+     border: 2px solid red;
+}
+#pole_vykladani_hrace{
+    margin-left:10vw;
+    margin-right:10vw;
+    display:grid;
+    grid-template-columns:repeat(4,20%);
+    column-gap:8%; /*Dodělat, aby to pasovalo s divem */
+    position: fixed;
+    top:55vh;
+    width: 60vw;
+    place-self:center;
+    border: 2px solid blue;
+}
+.karty{
+     width:10vw;
+     height:10vh;
+     cursor:pointer;
+}
+.vysouvani_karet{
+    transition: transform 0.5s;
+}
+ .vysouvani_karet:hover{
+    /*Když se přes něco přejede*/
+    transform: translateY(-30px);
+}
+.karty:active{
+    size: 100%
+      /*Když se na něčem drží tlačítko, tak se to vykonává*/
+ }
+.zakliknuta_karta{
+   margin-top:-60px;
+}
+#karta1{
+size: 100%
+}
+#karta2{
+  size: 100%  
+}
+#karta3{
+  size: 100%  
+}
+#karta4{
+  size: 100%  
+}
+#karta5{
+  size: 100%  
+}
+#pridavani_karet{
+    border:3px solid black;
+    width:10vw;
+    height:90vh;
+    background-color: gray;
+    text-align: center;
+    cursor:pointer;
+}
+#hodiny{
+    position: absolute;
+    top: 0vh;
+    right: 0vw;
+    height: 9vh;
+    width: 10vw;
+    background-color: lightgreen;
+    border: 5px solid darkgreen;
+}
+#kola{
+position: absolute;
+    top: 10vh;
+    right: 0vw;
+    height: 9vh;
+    width: 10vw;
+    background-color: yellow;
+    border: 5px solid darkorange;
+}
+#body{
+position: absolute;
+    top: 20vh;
+    right: 0vw;
+    height: 9vh;
+    width: 10vw;
+    background-color: violet;
+    border: 5px solid darkviolet;
+}
+#informace{
+position: absolute;
+    top: 30vh;
+    right: 0vw;
+    height: 49vh;
+    width: 10vw;
+    background-color: lightskyblue;
+    border: 5px solid darkblue;
+}
+#konecTahu{
+    position: absolute;
+    top: 80vh;
+    right: 0vw;
+    height: 10vh;
+    width: 10vw;
+    background-color: rosybrown;
+    border: 5px solid darkred;
+}
