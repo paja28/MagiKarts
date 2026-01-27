@@ -126,3 +126,4 @@
         protihrac_presunuta_karta.classList.remove("vysouvani_karet_protihrace")
         protihracovo_pole_vykladani_karet.append(protihrac_presunuta_karta);
     }
+

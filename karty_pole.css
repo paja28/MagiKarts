@@ -10,7 +10,7 @@
             place-self:center;
             border: 2px solid red;
         }
-        #hracovy_karty{
+#hracovy_karty{
             margin-left:10vw;
             margin-right:10vw;
             display:grid;
@@ -22,7 +22,7 @@
             place-self:center;
             border: 2px solid blue;
         }
-        #pole_vykladani_protivnika{
+#pole_vykladani_protivnika{
             margin-left:10vw;
             margin-right:10vw;
             display:grid;
@@ -34,7 +34,7 @@
             place-self:center;
             border: 2px solid red;
         }
-        #pole_vykladani_hrace{
+#pole_vykladani_hrace{
             margin-left:10vw;
             margin-right:10vw;
             display:grid;
@@ -46,7 +46,7 @@
             place-self:center;
             border: 2px solid blue;
         }
-        .karty{
+.karty{
             width:10vw;
             height:10vh;
             cursor:pointer;
@@ -126,3 +126,54 @@
         #protihrac_pole_karta4{
             order: 4;
         }
+#hodiny{
+    position: absolute;
+    top: 0vh;
+    right: 0vw;
+    height: 9vh;
+    width: 10vw;
+    background-color: lightgreen;
+    border: 5px solid darkgreen;
+}
+#kola{
+position: absolute;
+    top: 10vh;
+    right: 0vw;
+    height: 9vh;
+    width: 10vw;
+    background-color: yellow;
+    border: 5px solid darkorange;
+}
+#body{
+position: absolute;
+    top: 20vh;
+    right: 0vw;
+    height: 9vh;
+    width: 10vw;
+    background-color: violet;
+    border: 5px solid darkviolet;
+}
+#informace{
+position: absolute;
+    top: 30vh;
+    right: 0vw;
+    height: 49vh;
+    width: 10vw;
+    background-color: lightskyblue;
+    border: 5px solid darkblue;
+}
+#konecTahu{
+    position: absolute;
+    top: 80vh;
+    right: 0vw;
+    height: 10vh;
+    width: 10vw;
+    background-color: rosybrown;
+    border: 5px solid darkred;
+}
+
+        
+        
+        
+        
+
