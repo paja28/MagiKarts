@@ -88,8 +88,8 @@
         }
         #pridavani_karet{
             border:3px solid black;
-            width:300px;
-            height:500px;
+            width:10vw;
+            height:90vh;
             background-color: gray;
             text-align: center;
             cursor:pointer;
@@ -171,9 +171,22 @@ position: absolute;
     background-color: rosybrown;
     border: 5px solid darkred;
 }
+#herni_pole
+{
+
+}
+#informacni_okno
+{
+
+}
+body{
+display:flex;
+justify-content:space-between;
+}
 
         
         
         
         
+
 
