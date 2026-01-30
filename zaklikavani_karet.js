@@ -111,7 +111,7 @@
         let random_karta = document.getElementById(id_random_karta);
         pole_karet_protihrace.splice(random-1,1);
         random_karta.classList.add("vysouvani_karet_protihrace");
-        const zpozdeni = setTimeout(protihrac_presunuti_karty, 1000);F
+        const zpozdeni = setTimeout(protihrac_presunuti_karty, 1000);
         }
     }
 

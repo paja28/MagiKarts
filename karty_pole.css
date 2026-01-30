@@ -47,8 +47,8 @@
             border: 2px solid blue;
         }
 .karty{
-            width:10vw;
-            height:10vh;
+            width:100px;
+            height:150px;
             cursor:pointer;
         }
         .vysouvani_karet{
@@ -95,12 +95,17 @@
             cursor:pointer;
         }
         .prazdne_misto{
-            width: 10vw;
-            height: 10vh;
+            width: 100px;
+            height: 150px;
             background-color:gray;
             text-align:center;
         }
-
+        .protivnik_prazdne_misto{
+            width: 100px;
+            height: 150px;
+            background-color:gray;
+            text-align:center;
+        }
         #pole_karta1{
             order: 1;
         }
