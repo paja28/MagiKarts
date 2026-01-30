@@ -1,26 +1,24 @@
 PRAVIDLA:
 ----------
 Maximální počet vyložených karet je 4
-Každé kolo se může vykládat 1 karta
 Hráč má maximálně 5 karet
 
 Každá postava kromě kouzel má: HP, DMG, PTS, SEF, CLS
-
-HP  = životy karty: kolik má karta životů, při HP <= 0 = karta mizí a připisují se body protihráči
-DMG = útok: kolik životů karta ubere jiné
-PTS = body karty: poražení karty s větším PTS znamená více bodů pro výhru hry
-SEF = speciální efekty: jed, pasivní lěčení, oslabení
-CLS = typ jednotky: mág, lehkooděnec, těžkooděnec, kouzla (mag > těžkooděnec > lehkooděnec > mag)      //možná ještě nějaký classy
+----------
+HP  =             životy karty: kolik má karta životů, při HP <= 0 = karta mizí a připisují se body protihráči
+DMG =             útok: kolik životů karta ubere jiné
+POINTS =          body karty: poražení karty s větším PTS znamená více bodů pro výhru hry
+SPECIAL EFFECTS = speciální efekty: jed, pasivní lěčení, oslabení
+CLASS =           typ jednotky: mág, lehkooděnec, těžkooděnec, kouzla (mag > těžkooděnec > lehkooděnec > mag)      //možná ještě nějaký classy
 
 
 FÁZE KOLA:
 ----------
-1. dobrání karet
-2. vybrání akce karet (útok)
-3. vybrání akce karet (léčení)
-4. provedení efektů (prvně hráč, potom soupeř)
-5. provedení útoku  (prvně hráč, potom soupeř)
-6. provedení léčení (prvně hráč, potom soupeř)
+Každé kolo má hráč 3 možné tahy (minimálně jeden)
+Každá akce (líznutí karty, vyložení karty, útok, léčení) odebírá 1 tah
+Efekty (oheň, jed, pasivní léčení) neubírájí body.
+1. Hráč obdrží 3 tahy, provede akci
+2. Soupeř obdrží 2-4 body podle obtížnosti, provede akci
 
 PRŮBĚH HRY:
 -----------
