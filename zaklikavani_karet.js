@@ -3,6 +3,8 @@
     var pole_chybejicich_karet = [];
     var pole_karet_protihrace =["protihrac_karta1","protihrac_karta2","protihrac_karta3","protihrac_karta4","protihrac_karta5"];
     var protihrac_pole_chybejicich_karet = ["protihrac_pole_karta1","protihrac_pole_karta2","protihrac_pole_karta3","protihrac_pole_karta4"];
+    var pole_karet = [Lucistnik,Bojovnik,Kouzelnik,Spartan,Fireball];
+
     function nakliknuto(id){
         let karta = document.getElementById(id);
         let prazdna_mista;
@@ -89,13 +91,17 @@
     
     function pridani_karty(){
         if(pole_chybejicich_karet.length>0){
+        let random = Math.floor(Math.random()*pole_karet.length)
+        console.log(random);
+        let source = pole_karet[random].img;
+        
         const karty_hrace = document.getElementById("hracovy_karty");
         const nova_karta = document.createElement("img");
         const id_chybejici_karty = pole_chybejicich_karet.shift();
         nova_karta.setAttribute("id",id_chybejici_karty);
         nova_karta.setAttribute("class","karty vysouvani_karet"); 
         nova_karta.setAttribute("onclick","nakliknuto(\'"+id_chybejici_karty+"\')");
-        nova_karta.setAttribute("src","spartan.jpg");
+        nova_karta.setAttribute("src",source);
         karty_hrace.appendChild(nova_karta);       
         }
         //aby mohlo být jen 5 karet v inventáři
@@ -118,7 +124,6 @@
     function protihrac_presunuti_karty(){
         const protihrac_prazdne_misto = protihrac_pole_chybejicich_karet.splice(0,1);
         const karta_na_vymazani = document.querySelector(".vysouvani_karet_protihrace");
-        console.log(karta_na_vymazani);
         const protihrac_presunuta_karta = karta_na_vymazani;
         const protihracovo_pole_vykladani_karet = document.getElementById("pole_vykladani_protivnika");
         karta_na_vymazani.remove();//vymazání karty u hráče
