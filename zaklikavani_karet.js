@@ -1,9 +1,19 @@
     var je_zakliknuta_karta =false;
     var zakliknuta_karta = null;
-    var pole_chybejicich_karet = [];
+    var pole_chybejicich_karet = ["karta1","karta2","karta3","karta4","karta5"];
     var pole_karet_protihrace =["protihrac_karta1","protihrac_karta2","protihrac_karta3","protihrac_karta4","protihrac_karta5"];
     var protihrac_pole_chybejicich_karet = ["protihrac_pole_karta1","protihrac_pole_karta2","protihrac_pole_karta3","protihrac_pole_karta4"];
+    var protihrac_utocne_karty = []; //
     var pole_karet = [Lucistnik,Bojovnik,Kouzelnik,Spartan,Fireball];
+    var hrac_inventar_karty = []
+    var hrac_utocne_karty = [];
+    var pomocna_promenna = 0;
+    window.onload = function() {    //dá hráči prvních 5 random karet
+        for(let i =0;i<5;i++){
+            pridani_karty();
+        }
+        console.log(pole_chybejicich_karet);
+    }
 
     function nakliknuto(id){
         let karta = document.getElementById(id);
@@ -62,7 +72,7 @@
         if(zakliknuta_karta !=null){
             const presunuta_karta = document.getElementById(zakliknuta_karta);
             const hracovo_pole_vykladani = document.getElementById("pole_vykladani_hrace");
-            document.getElementById(id_prazdneho_mista).remove();
+            document.getElementById(id_prazdneho_mista).remove();       //vymaže prázdné místo na vykládání
             document.getElementById(zakliknuta_karta).remove();
             
             pole_chybejicich_karet.push(zakliknuta_karta);//dává do pole id karty, která hráčovi chybí
@@ -73,8 +83,10 @@
 
             //predelani karty aby mela stejne classy jako ostatni v poli
             presunuta_karta.removeAttribute("onclick");
-            presunuta_karta.classList.remove("zakliknuta_karta");
+            presunuta_karta.classList.remove("zakliknuta_karta");        
             presunuta_karta.id=id_prazdneho_mista;
+            presunuta_karta.setAttribute("onclick","utok("+presunuta_karta.id+")");
+            console.log(presunuta_karta.id);
             //
 
             hracovo_pole_vykladani.append(presunuta_karta);
@@ -83,26 +95,32 @@
 
             //tady začíná hrát protihráč
             protihrac_vybrani_random_karty();
+
+
         }
         else
             console.log("Chyba, zakliknuta_karta je rovna null. Ve funkci presunuti_karty()");
     }
     
-    
     function pridani_karty(){
         if(pole_chybejicich_karet.length>0){
         let random = Math.floor(Math.random()*pole_karet.length)
-        console.log(random);
-        let source = pole_karet[random].img;
-        
+        console.log(random);    
+        hrac_inventar_karty[pomocna_promenna] = pole_karet[random];                      //Vybere se random karta objektová(např. spartan)
+        pomocna_promenna++;
+        if(pomocna_promenna>4)
+            pomocna_promenna=0;
         const karty_hrace = document.getElementById("hracovy_karty");
         const nova_karta = document.createElement("img");
         const id_chybejici_karty = pole_chybejicich_karet.shift();
+        hrac_utocne_karty[pomocna_promenna].id=id_chybejici_karty;
+        console.log(hrac_utocne_karty[pomocna_promenna]);
         nova_karta.setAttribute("id",id_chybejici_karty);
         nova_karta.setAttribute("class","karty vysouvani_karet"); 
         nova_karta.setAttribute("onclick","nakliknuto(\'"+id_chybejici_karty+"\')");
-        nova_karta.setAttribute("src",source);
-        karty_hrace.appendChild(nova_karta);       
+        nova_karta.setAttribute("src",hrac_utocne_karty[pomocna_promenna].img);
+        karty_hrace.appendChild(nova_karta);  
+        console.log(hrac_inventar_karty);     
         }
         //aby mohlo být jen 5 karet v inventáři
         else{
@@ -130,5 +148,17 @@
         document.getElementById(protihrac_prazdne_misto).remove();//vymazání prázdného místa na středu
         protihrac_presunuta_karta.classList.remove("vysouvani_karet_protihrace")
         protihracovo_pole_vykladani_karet.append(protihrac_presunuta_karta);
+        protihrac_utocne_karty.push(protihrac_presunuta_karta.id);
     }
+
+    function utok(karta_utocna){
+        for(let i =0; i < protihrac_utocne_karty.length;i++){
+            document.getElementById(protihrac_utocne_karty[i]).setAttribute("onclick","snizeni_hp("+protihrac_utocne_karty[i]+", "+karta_utocna.id+")");
+        }
+    }
+
+    function snizeni_hp(karta_snizeni_id,karta_utocna_id){
+
+    }
+
 
