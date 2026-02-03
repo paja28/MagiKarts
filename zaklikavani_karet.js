@@ -108,7 +108,7 @@
         console.log(random);    
         hrac_objekty_karty[index_hrac_karty_objekty] = pole_karet[random];                      //Vybere se random karta objektová(např. spartan)
         
-        if(index_hrac_karty_objekty>4)
+        if(index_hrac_karty_objekty>8)
             index_hrac_karty_objekty=0;
         const karty_hrace = document.getElementById("hracovy_karty");
         const nova_karta = document.createElement("img");
