@@ -5,9 +5,9 @@
     var protihrac_pole_chybejicich_karet = ["protihrac_pole_karta1","protihrac_pole_karta2","protihrac_pole_karta3","protihrac_pole_karta4"];
     var protihrac_utocne_karty = []; //
     var pole_karet = [Lucistnik,Bojovnik,Kouzelnik,Spartan,Fireball];
-    var hrac_inventar_karty = []
+    var hrac_objekty_karty = [];     //v tomhle jsou objekty, která má jakákoliv karta v hráčovím inventáři
     var hrac_utocne_karty = [];
-    var pomocna_promenna = 0;
+    var index_hrac_karty_objekty = 0;
     window.onload = function() {    //dá hráči prvních 5 random karet
         for(let i =0;i<5;i++){
             pridani_karty();
@@ -106,21 +106,22 @@
         if(pole_chybejicich_karet.length>0){
         let random = Math.floor(Math.random()*pole_karet.length)
         console.log(random);    
-        hrac_inventar_karty[pomocna_promenna] = pole_karet[random];                      //Vybere se random karta objektová(např. spartan)
-        pomocna_promenna++;
-        if(pomocna_promenna>4)
-            pomocna_promenna=0;
+        hrac_objekty_karty[index_hrac_karty_objekty] = pole_karet[random];                      //Vybere se random karta objektová(např. spartan)
+        
+        if(index_hrac_karty_objekty>4)
+            index_hrac_karty_objekty=0;
         const karty_hrace = document.getElementById("hracovy_karty");
         const nova_karta = document.createElement("img");
         const id_chybejici_karty = pole_chybejicich_karet.shift();
-        hrac_utocne_karty[pomocna_promenna].id=id_chybejici_karty;
-        console.log(hrac_utocne_karty[pomocna_promenna]);
+        hrac_objekty_karty[index_hrac_karty_objekty].id=id_chybejici_karty;
+        console.log(hrac_objekty_karty[index_hrac_karty_objekty]);
         nova_karta.setAttribute("id",id_chybejici_karty);
         nova_karta.setAttribute("class","karty vysouvani_karet"); 
         nova_karta.setAttribute("onclick","nakliknuto(\'"+id_chybejici_karty+"\')");
-        nova_karta.setAttribute("src",hrac_utocne_karty[pomocna_promenna].img);
+        nova_karta.setAttribute("src",hrac_objekty_karty[index_hrac_karty_objekty].img);
         karty_hrace.appendChild(nova_karta);  
-        console.log(hrac_inventar_karty);     
+        console.log(hrac_objekty_karty);  
+        index_hrac_karty_objekty++;
         }
         //aby mohlo být jen 5 karet v inventáři
         else{
