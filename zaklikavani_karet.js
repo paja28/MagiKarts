@@ -73,7 +73,7 @@
             const hracovo_pole_vykladani = document.getElementById("pole_vykladani_hrace");
             document.getElementById(id_prazdneho_mista).remove();       //vymaže prázdné místo na vykládání
             document.getElementById(zakliknuta_karta).remove();
-            for(i = 0;i<hrac_objekty_karty.length;i++){
+            for(let i = 0;i<hrac_objekty_karty.length;i++){
                 if(hrac_objekty_karty[i].id==zakliknuta_karta){
                     hrac_objekty_karty[i].id = id_prazdneho_mista;      //předělání id u objektu při přesunu
                     break;
@@ -158,12 +158,23 @@
     }
 
     function utok(karta_utocna){
+        console.log(karta_utocna);      //vyhodí img celou kartu prostě element 
+        let utocna_karta_objekt=null;
+        for(let i = 0;i<hrac_objekty_karty.length;i++){
+            console.log(hrac_objekty_karty[i]);
+                if(hrac_objekty_karty[i].id==karta_utocna.id){
+                    console.log(karta_utocna.id);
+                    utocna_karta_objekt = hrac_objekty_karty[i];      //předělání id u objektu při přesunu
+                    break;
+                }
+            }
         for(let i =0; i < protihrac_utocne_karty.length;i++){
-            document.getElementById(protihrac_utocne_karty[i]).setAttribute("onclick","snizeni_hp("+protihrac_utocne_karty[i]+", "+karta_utocna.id+")");
+            document.getElementById(protihrac_utocne_karty[i]).setAttribute("onclick","snizeni_hp("+protihrac_utocne_karty[i]+", "+utocna_karta_objekt+")");
         }
     }
 
-    function snizeni_hp(karta_snizeni_id,karta_utocna_id){
+    function snizeni_hp(karta_objekt_snizeni,karta_utocna_objekt){
+        console.log(karta_utocna_objekt);
 
     }
 
