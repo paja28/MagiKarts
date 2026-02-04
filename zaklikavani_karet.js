@@ -6,7 +6,6 @@
     var protihrac_utocne_karty = []; //
     var pole_karet = [Lucistnik,Bojovnik,Kouzelnik,Spartan,Fireball];
     var hrac_objekty_karty = [];     //v tomhle jsou objekty, která má jakákoliv karta v hráčovím inventáři
-    var hrac_utocne_karty = [];
     var index_hrac_karty_objekty = 0;
     window.onload = function() {    //dá hráči prvních 5 random karet
         for(let i =0;i<5;i++){
@@ -74,7 +73,13 @@
             const hracovo_pole_vykladani = document.getElementById("pole_vykladani_hrace");
             document.getElementById(id_prazdneho_mista).remove();       //vymaže prázdné místo na vykládání
             document.getElementById(zakliknuta_karta).remove();
-            
+            for(i = 0;i<hrac_objekty_karty.length;i++){
+                if(hrac_objekty_karty[i].id==zakliknuta_karta){
+                    hrac_objekty_karty[i].id = id_prazdneho_mista;      //předělání id u objektu při přesunu
+                    break;
+                }
+            }
+            console.log(hrac_objekty_karty);
             pole_chybejicich_karet.push(zakliknuta_karta);//dává do pole id karty, která hráčovi chybí
             if(!document.getElementById("pridavani_karet").hasAttribute("onclick")) //přidání attributu, aby si hráč mohl nakliknout další kartu, když jich nemá 5
             {
@@ -114,13 +119,13 @@
         const nova_karta = document.createElement("img");
         const id_chybejici_karty = pole_chybejicich_karet.shift();
         hrac_objekty_karty[index_hrac_karty_objekty].id=id_chybejici_karty;
-        console.log(hrac_objekty_karty[index_hrac_karty_objekty]);
+        console.log(hrac_objekty_karty[index_hrac_karty_objekty].id);
         nova_karta.setAttribute("id",id_chybejici_karty);
         nova_karta.setAttribute("class","karty vysouvani_karet"); 
         nova_karta.setAttribute("onclick","nakliknuto(\'"+id_chybejici_karty+"\')");
         nova_karta.setAttribute("src",hrac_objekty_karty[index_hrac_karty_objekty].img);
         karty_hrace.appendChild(nova_karta);  
-        console.log(hrac_objekty_karty);  
+        console.log(hrac_objekty_karty[index_hrac_karty_objekty]);  
         index_hrac_karty_objekty++;
         }
         //aby mohlo být jen 5 karet v inventáři
