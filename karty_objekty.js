@@ -10,10 +10,10 @@ const Lucistnik = {
 	img: 'lucistnik.png',
 	id:""
 }
-const Kouzelnik = {
+const Carodej = {
 	hp: 10,
 	dmg: 3,
-	img: "kouzelnik.jpg",
+	img: "carodej.png",
 	id:""
 }
 const Bojovnik = {
@@ -27,3 +27,4 @@ const Fireball = {
 	img:"fireball.jpg",
 	id:""
 }
+
