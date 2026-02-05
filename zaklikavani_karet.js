@@ -11,7 +11,6 @@
         for(let i =0;i<5;i++){
             pridani_karty();
         }
-        console.log(pole_chybejicich_karet);
     }
 
     function nakliknuto(id){
@@ -113,19 +112,19 @@
         console.log(random);    
         hrac_objekty_karty[index_hrac_karty_objekty] = pole_karet[random];                      //Vybere se random karta objektová(např. spartan)
         
-        if(index_hrac_karty_objekty>8)
+        if(index_hrac_karty_objekty>4)
             index_hrac_karty_objekty=0;
         const karty_hrace = document.getElementById("hracovy_karty");
         const nova_karta = document.createElement("img");
         const id_chybejici_karty = pole_chybejicich_karet.shift();
         hrac_objekty_karty[index_hrac_karty_objekty].id=id_chybejici_karty;
-        console.log(hrac_objekty_karty[index_hrac_karty_objekty].id);
         nova_karta.setAttribute("id",id_chybejici_karty);
         nova_karta.setAttribute("class","karty vysouvani_karet"); 
         nova_karta.setAttribute("onclick","nakliknuto(\'"+id_chybejici_karty+"\')");
         nova_karta.setAttribute("src",hrac_objekty_karty[index_hrac_karty_objekty].img);
         karty_hrace.appendChild(nova_karta);  
         console.log(hrac_objekty_karty[index_hrac_karty_objekty]);  
+        console.log(hrac_objekty_karty[index_hrac_karty_objekty].id);
         index_hrac_karty_objekty++;
         }
         //aby mohlo být jen 5 karet v inventáři
@@ -165,6 +164,7 @@
                 if(hrac_objekty_karty[i].id==karta_utocna.id){
                     console.log(karta_utocna.id);
                     utocna_karta_objekt = hrac_objekty_karty[i];      //předělání id u objektu při přesunu
+                    utocna_karta_objekt.dmg = 1;
                     break;
                 }
             }
