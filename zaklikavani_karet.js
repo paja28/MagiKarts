@@ -12,7 +12,6 @@
     var index_hrac_karty_objekty = 0;
     var utocici_karta_objekt = null;
     var byvala_zakliknuta_karta_id ="";//Slouží aby při rychlém kliknutí na kartu v inventáři, se neprobugovala nahoru
-    var vysouvani_pomocna_promenna2 =0;//Slouží aby při rychlém kliknutí na kartu v inventáři, se neprobugovala nahoru
 
     window.onload = function() {    //dá hráči prvních 5 random karet
         for(let i =0;i<5;i++){
@@ -52,7 +51,7 @@
                 prazdna_mista = document.querySelectorAll(".prazdne_misto");
                 for(let i =0;i<prazdna_mista.length;i++){
                     prazdna_mista[i].classList.remove("clickable");
-                prazdna_mista[i].removeAttribute("onclick");            
+                    prazdna_mista[i].removeAttribute("onclick");            
                 }
                 setTimeout(function(){
                     console.log(byvala_zakliknuta_karta_id,zakliknuta_karta_id);
@@ -84,6 +83,7 @@
 
     function presunuti_karty(id_prazdneho_mista){
         if(zakliknuta_karta_id !=null){
+            let prazdna_mista;
             const presunuta_karta = document.getElementById(zakliknuta_karta_id);
             const hracovo_pole_vykladani = document.getElementById("pole_vykladani_hrace");
             document.getElementById(id_prazdneho_mista).remove();       //vymaže prázdné místo na vykládání
@@ -99,7 +99,6 @@
             hrac_id_chybejicich_karet.push(zakliknuta_karta_id);//dává do pole id karty, která hráčovi chybí
             if(!document.getElementById("pridavani_karet").hasAttribute("onclick")) //přidání attributu, aby si hráč mohl nakliknout další kartu, když jich nemá 5
             {
-                document.getElementById("pridavani_karet").classList.add("clickable");
                 document.getElementById("pridavani_karet").setAttribute("onclick","pridani_karty(\"hrac\")");
             }
 
@@ -116,7 +115,8 @@
             je_zakliknuta_karta=false;
             zakliknuta_karta_id=null;
 
-            for(let i =0;i<prazdna_mista.length;i++){               //nastavení všech prázdných míst, aby nebyli klikatelný
+            prazdna_mista = document.querySelectorAll(".prazdne_misto");
+            for(let i =0;i<prazdna_mista.length;i++){               //nastavení všech prázdných míst, aby nebyl cursor pointer
                 prazdna_mista[i].classList.remove("clickable");    
             }
 
@@ -164,10 +164,15 @@
 
         nova_karta_img.setAttribute("src", nova_karta_objekt.img);
        
-        karty_hrace_nebo_protihrace.appendChild(nova_karta_img);  
-    } else {
+        karty_hrace_nebo_protihrace.appendChild(nova_karta_img);
+
+        if(hrac_nebo_protihrac=="hrac"&&hrac_id_chybejicich_karet.length <1){       //Pokud má hráč 5 karet v inventáři, změní se pointer na normální u přidávání karet
         document.getElementById("pridavani_karet").classList.remove("clickable");
         document.getElementById("pridavani_karet").removeAttribute("onclick");
+        } 
+    } 
+    else {
+        console.log("hrac ma maximum karet v inventari");
     }    
     }
 
@@ -214,8 +219,9 @@
             }
             console.log(utocici_karta_objekt);
         for(let i =0; i < protihrac_prostredek_objekty_karty.length;i++){
-            console.log(document.getElementById(protihrac_prostredek_objekty_karty[i].id));
+            document.getElementById(protihrac_prostredek_objekty_karty[i].id);
             document.getElementById(protihrac_prostredek_objekty_karty[i].id).setAttribute("onclick","snizeni_hp(\""+protihrac_prostredek_objekty_karty[i].id+"\")");
+            document.getElementById(protihrac_prostredek_objekty_karty[i].id).classList.add("clickable");
         }
     }
 
