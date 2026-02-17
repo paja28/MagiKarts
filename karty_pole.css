@@ -1,49 +1,38 @@
 #protihracovy_karty{
-            margin-left:10vw;
-            margin-right:10vw;
+            /*margin-left:10vw;
+            margin-right:10vw;*/
             display:grid;
             grid-template-columns:repeat(5,15%);
             column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:10vh;
             width: 60vw;
-            place-self:center;
             border: 2px solid red;
         }
 #hracovy_karty{
-            margin-left:10vw;
-            margin-right:10vw;
+            /*margin-left:10vw;
+            margin-right:10vw;*/
             display:grid;
             grid-template-columns:repeat(5,15%);
             column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:80vh;
             width: 60vw;
-            place-self:center;
             border: 2px solid blue;
         }
 #pole_vykladani_protihrace{
-            margin-left:10vw;
-            margin-right:10vw;
+            /*margin-left:10vw;
+            margin-right:10vw;*/
             display:grid;
             grid-template-columns:repeat(4,20%);
             column-gap:8%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:35vh;
             width: 60vw;
-            place-self:center;
             border: 2px solid red;
         }
 #pole_vykladani_hrace{
-            margin-left:10vw;
+            /*margin-left:10vw;
             margin-right:10vw;
+            */
             display:grid;
             grid-template-columns:repeat(4,20%);
             column-gap:8%; /*Dodělat, aby to pasovalo s divem */
-            position: fixed;
-            top:55vh;
             width: 60vw;
-            place-self:center;
             border: 2px solid blue;
         }
         .karty{
@@ -86,11 +75,9 @@
             
         }
         #pridavani_karet{
-            border:3px solid black;
-            width:10vw;
-            height:90vh;
-            background-color: gray;
-            text-align: center;
+            width:150px;
+            height:225px;
+
         }
         .prazdne_misto{
             width: 100px;
@@ -130,58 +117,62 @@
             order: 4;
         }
 #hodiny{
-    top: 0vh;
     height: 9vh;
     width: 10vw;
     background-color: lightgreen;
     border: 5px solid darkgreen;
 }
 #kola{
-    top: 10vh;
     height: 9vh;
     width: 10vw;
     background-color: yellow;
     border: 5px solid darkorange;
 }
 #body{
-    top: 20vh;
     height: 9vh;
     width: 10vw;
     background-color: violet;
     border: 5px solid darkviolet;
 }
 #informace{
-    top: 30vh;
     height: 49vh;
     width: 10vw;
     background-color: lightskyblue;
     border: 5px solid darkblue;
 }
 #konecTahu{
-    top: 80vh;
     height: 10vh;
     width: 10vw;
     background-color: rosybrown;
     border: 5px solid darkred;
 }
-#herni_pole
-{
-    width: auto;
+#herni_pole{
+    width: 70vw;
     height: auto;
+    display:flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
 }
-#informacni_okno
-{
-
+#informacni_okno{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 body{
-display:flex;
-justify-content:space-between;
+/*display:flex;
+justify-content:space-between;*/
+display:grid;
+grid-template-columns: 15%70%15%;
 }
 .clickable{
     cursor:pointer;
 }
-        
-        
+#leva_strana{
+    display:flex;
+    align-items: center;
+    justify-content:center;
+}        
         
         
 
