@@ -31,6 +31,10 @@ var prvni_tah;
 var druhy_tah;
 var treti_tah;
 var spusteni_tahu = false;
+
+//Pro přesunutí karet
+var vybrane_karty = [];
+var vybrane_karty_index=0;
 // --- HLAVNÍ FUNKCE ---
 
 window.onload = function() {
@@ -61,7 +65,8 @@ function nakliknuto(id) {
         // 1. Situace: Nic není vybráno, vybírám kartu
         je_zakliknuta_karta = true;
         zakliknuta_karta_id = id;
-        
+        vybrane_karty[vybrane_karty_index]=zakliknuta_karta_id;
+
         karta.classList.add("zakliknuta_karta");
         karta.classList.remove("vysouvani_karet");
 
@@ -82,6 +87,7 @@ function nakliknuto(id) {
             
             byvala_zakliknuta_karta_id = zakliknuta_karta_id;
             zakliknuta_karta_id = null;
+            vybrane_karty[vybrane_karty_index]= zakliknuta_karta_id;
 
             // Zrušit zvýraznění míst
             prazdna_mista = document.querySelectorAll(".prazdne_misto");
@@ -104,6 +110,7 @@ function nakliknuto(id) {
             je_zakliknuta_karta = true;
             byvala_zakliknuta_karta_id = zakliknuta_karta_id;
             zakliknuta_karta_id = id;
+            vybrane_karty[vybrane_karty_index]=zakliknuta_karta_id;
 
             karta.classList.add("zakliknuta_karta");
             karta.classList.remove("vysouvani_karet");
@@ -114,15 +121,15 @@ function nakliknuto(id) {
 
 function presunuti_karty(id_prazdneho_mista) {
 if(spusteni_tahu){
-    if (zakliknuta_karta_id != null) {
-        const presunuta_karta_element = document.getElementById(zakliknuta_karta_id);
+    //if (zakliknuta_karta_id != null) {
+        const presunuta_karta_element = document.getElementById(vybrane_karty[vybrane_karty_index]);
         const cilove_misto = document.getElementById(id_prazdneho_mista);
         
         // --- LOGIKA DAT ---
         // Najdeme kartu v inventáři a přesuneme ji do pole "na stole"
         let index_nalezene_karty = -1;
         for (let i = 0; i < hrac_inventar_objekty_karty.length; i++) {
-            if (hrac_inventar_objekty_karty[i].id === zakliknuta_karta_id) {
+            if (hrac_inventar_objekty_karty[i].id === vybrane_karty[vybrane_karty_index]) {
                 index_nalezene_karty = i;
                 break;
             }
@@ -160,7 +167,7 @@ if(spusteni_tahu){
 
         // Reset stavu
         je_zakliknuta_karta = false;
-        zakliknuta_karta_id = null;
+        //zakliknuta_karta_id = null;
 
         // Vypnutí ostatních prázdných míst
         let prazdna_mista = document.querySelectorAll(".prazdne_misto");
@@ -168,10 +175,8 @@ if(spusteni_tahu){
             m.classList.remove("clickable");
             m.onclick = null;
         });
-
-        // Konec tahu hráče -> hraje PC? Záleží na pravidlech, zatím voláme logiku PC
-        protihrac_vybrani_random_karty();
-    }
+        vybrane_karty_index++;
+    //}
 }
 else{
     if(pocet_tahu >0){
@@ -179,16 +184,14 @@ else{
         console.log("nespustí se, protože hráč nepotvrdil tahy.");
         if(prvni_tah==null){
             prvni_tah=presunuti_karty.bind(null,id_prazdneho_mista);
-            console.log(prvni_tah);
         }
         else if(druhy_tah==null){
             druhy_tah=presunuti_karty.bind(null,id_prazdneho_mista);
-            console.log(druhy_tah);
         }
         else if(treti_tah==null){
             treti_tah=presunuti_karty.bind(null,id_prazdneho_mista);
-            console.log(treti_tah);
         }
+        vybrane_karty_index++;
     }
     else
         console.log("Hráč už nemá tahy.");
@@ -347,8 +350,6 @@ function snizeni_hp(cil_id) {
             }
         });
 
-        protihrac_random_tahy();
-
     } else {
         // --- PROTIHRÁČ ÚTOČÍ NA HRÁČE (AI LOGIKA) ---
         // Zde cil_id je ID karty HRÁČE, na kterou útočí AI
@@ -456,20 +457,30 @@ function pauza(ms) {
 }
 
 
-
 function potvrzeni_tahu(){
-    console.log(pocet_tahu);
     if(pocet_tahu<3){
+    vybrane_karty_index=0;  //Proto aby fungovalo dobře přesouvání karet;
     spusteni_tahu = true;
     prvni_tah();
+    prvni_tah=null;
     if(druhy_tah !=null){
         druhy_tah();
+        druhy_tah=null;
         if(treti_tah!=null)
         {
             treti_tah();
+            treti_tah=null;
         }
     }
+    protihrac_random_tahy();
+    pocet_tahu = 3;
     spusteni_tahu = false;
+
+    //Pro funkční přesouvání karet je to potřeba nullovat
+    for(let i =0;i<3;i++){
+        vybrane_karty[i]=null;
+    }
+    vybrane_karty_index=0;
     }
     else
     {
