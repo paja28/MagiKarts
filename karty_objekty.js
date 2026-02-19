@@ -27,4 +27,9 @@ const Fireball = {
 	img:"fireball.jpg",
 	id:""
 }
+const Kopinik = {
+	hp:40,
+	dmg: 10,
+	id:""
+}
 
