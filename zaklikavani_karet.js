@@ -15,7 +15,7 @@ var protihrac_inventar_objekty_karty = [];
 var protihrac_prostredek_objekty_karty = [];
 
 // Objekty
-var pole_karet = [Lucistnik, Bojovnik, Carodej, Spartan, Fireball];
+var pole_karet = [Spartan,Mag_ohne,Fireball,Kopinik,Jedovy_sip,Kusnik,Paladin,Leceni];
 
 var hrac_inventar_objekty_karty = [];
 var hrac_prostredek_objekty_karty = [];
@@ -26,6 +26,11 @@ var pocet_kol = 1;
 var pocet_tahu = 3;
 var hraje_hrac = true;
 
+// Tahy hráče
+var prvni_tah;
+var druhy_tah;
+var treti_tah;
+var spusteni_tahu = false;
 // --- HLAVNÍ FUNKCE ---
 
 window.onload = function() {
@@ -108,14 +113,8 @@ function nakliknuto(id) {
 }
 
 function presunuti_karty(id_prazdneho_mista) {
+if(spusteni_tahu){
     if (zakliknuta_karta_id != null) {
-        if (pocet_tahu <= 0) {
-            console.log("Nemáš dost tahů!");
-            return;
-        }
-
-        pocet_tahu--;
-        
         const presunuta_karta_element = document.getElementById(zakliknuta_karta_id);
         const cilove_misto = document.getElementById(id_prazdneho_mista);
         
@@ -174,6 +173,28 @@ function presunuti_karty(id_prazdneho_mista) {
         protihrac_vybrani_random_karty();
     }
 }
+else{
+    if(pocet_tahu >0){
+        pocet_tahu--;
+        console.log("nespustí se, protože hráč nepotvrdil tahy.");
+        if(prvni_tah==null){
+            prvni_tah=presunuti_karty.bind(null,id_prazdneho_mista);
+            console.log(prvni_tah);
+        }
+        else if(druhy_tah==null){
+            druhy_tah=presunuti_karty.bind(null,id_prazdneho_mista);
+            console.log(druhy_tah);
+        }
+        else if(treti_tah==null){
+            treti_tah=presunuti_karty.bind(null,id_prazdneho_mista);
+            console.log(treti_tah);
+        }
+    }
+    else
+        console.log("Hráč už nemá tahy.");
+}
+}
+
 
 function pridani_karty(hrac_nebo_protihrac) {
     // Zjistíme, jestli má hráč/protihráč místo v ruce
@@ -432,4 +453,26 @@ async function protihrac_random_tahy() {
 // Jednoduchá funkce pro čekání
 function pauza(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+
+function potvrzeni_tahu(){
+    console.log(pocet_tahu);
+    if(pocet_tahu<3){
+    spusteni_tahu = true;
+    prvni_tah();
+    if(druhy_tah !=null){
+        druhy_tah();
+        if(treti_tah!=null)
+        {
+            treti_tah();
+        }
+    }
+    spusteni_tahu = false;
+    }
+    else
+    {
+        console.log("Hráč neudělal ani jeden tah.");
+    }
 }

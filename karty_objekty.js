@@ -1,35 +1,44 @@
 const Spartan = {
-	hp: 12,
-	dmg: 2,
-	img: "spartan.jpg",
+	hp: 30,
+	dmg: 15,
+	img: "spartan.png",
 	id:""
 }
-const Lucistnik = {
-	hp: 14,
-	dmg: 2,
-	img: 'lucistnik.png',
-	id:""
-}
-const Carodej = {
-	hp: 10,
-	dmg: 3,
+const Mag_ohne = {
+	hp: 30,
+	dmg: 15,
 	img: "carodej.png",
 	id:""
 }
-const Bojovnik = {
-	hp: 15,
-	dmg:4,
-	img: "bojovnik.jpg",
-	id:""
-}
 const Fireball = {
-	dmg:5,
-	img:"fireball.jpg",
+	dmg:30,
+	img:"fireball.png",
 	id:""
 }
 const Kopinik = {
 	hp:40,
 	dmg: 10,
+	img:"kopinik.png",
 	id:""
+}
+const Jedovy_sip = {
+	dmg:10,
+	img:"jedovy_sip.png",
+	id:""
+}
+const Kusnik = {
+	hp:30,
+	dmg:15,
+	img:"kusnik.png",
+	id:""
+}
+const Paladin = {
+	hp:60,
+	dmg:5,
+	img:"paladin.png",
+	id:""
+}
+const Leceni = {
+	img:"leceni.png"
 }
 
