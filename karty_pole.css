@@ -173,7 +173,13 @@ grid-template-columns: 15%70%15%;
     align-items: center;
     justify-content:center;
 }        
-        
-        
-
+.prvni_ramecek{
+    border: 4px solid blue;
+}    
+.druhy_ramecek{
+    border: 4px solid green;
+}       
+.treti_ramecek{
+    border: 4px solid yellow;
+}   
 
