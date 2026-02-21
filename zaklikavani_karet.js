@@ -15,27 +15,41 @@ var protihrac_inventar_objekty_karty = [];
 var protihrac_prostredek_objekty_karty = [];
 
 // Objekty
-var pole_karet = [Lucistnik, Bojovnik, Carodej, Spartan, Fireball];
+var pole_karet = [Spartan,Mag_ohne,Fireball,Kopinik,Jedovy_sip,Kusnik,Paladin,Leceni];
 
 var hrac_inventar_objekty_karty = [];
 var hrac_prostredek_objekty_karty = [];
 
-var utocici_karta_objekt = null;
 var byvala_zakliknuta_karta_id = "";
 var pocet_kol = 1;
 var pocet_tahu = 3;
 var hraje_hrac = true;
 
+// Tahy hráče
+var prvni_tah;
+var druhy_tah;
+var treti_tah;
+var spusteni_tahu = false;
+
+//Pro přesunutí karet
+var vybrane_karty = [];
+var vybrane_karty_index=0;
+
+//Pro útok hráče
+var utocici_karty_objekty = [];
+var utocici_karty_objekty_index = 0;
 // --- HLAVNÍ FUNKCE ---
 
 window.onload = function() {
     // Rozdání počátečních karet
+    spusteni_tahu=true;
     for (let i = 0; i < 5; i++) {
         pridani_karty("hrac");
         // Resetujeme tahy, protože přidání karty při startu je nebere
         pocet_tahu = 3; 
         pridani_karty("protihrac");
     }
+    spusteni_tahu=false;
     console.log("Hra připravena!");
 }
 
@@ -56,7 +70,8 @@ function nakliknuto(id) {
         // 1. Situace: Nic není vybráno, vybírám kartu
         je_zakliknuta_karta = true;
         zakliknuta_karta_id = id;
-        
+        vybrane_karty[vybrane_karty_index]=zakliknuta_karta_id;
+
         karta.classList.add("zakliknuta_karta");
         karta.classList.remove("vysouvani_karet");
 
@@ -77,6 +92,7 @@ function nakliknuto(id) {
             
             byvala_zakliknuta_karta_id = zakliknuta_karta_id;
             zakliknuta_karta_id = null;
+            vybrane_karty[vybrane_karty_index]= zakliknuta_karta_id;
 
             // Zrušit zvýraznění míst
             prazdna_mista = document.querySelectorAll(".prazdne_misto");
@@ -99,6 +115,7 @@ function nakliknuto(id) {
             je_zakliknuta_karta = true;
             byvala_zakliknuta_karta_id = zakliknuta_karta_id;
             zakliknuta_karta_id = id;
+            vybrane_karty[vybrane_karty_index]=zakliknuta_karta_id;
 
             karta.classList.add("zakliknuta_karta");
             karta.classList.remove("vysouvani_karet");
@@ -108,22 +125,37 @@ function nakliknuto(id) {
 }
 
 function presunuti_karty(id_prazdneho_mista) {
-    if (zakliknuta_karta_id != null) {
-        if (pocet_tahu <= 0) {
-            console.log("Nemáš dost tahů!");
-            return;
+    const presunuta_karta_element = document.getElementById(vybrane_karty[vybrane_karty_index]);
+    const cilove_misto = document.getElementById(id_prazdneho_mista);
+if(spusteni_tahu){
+    //if (zakliknuta_karta_id != null) {
+        
+        //Smazání rámečku kolem karet
+         //Orámečkování vybrané karty a prázdného místa
+        switch(vybrane_karty_index){
+            case 0:
+                cilove_misto.classList.remove("prvni_ramecek");
+                presunuta_karta_element.classList.remove("prvni_ramecek");
+                break;
+            case 1:
+                cilove_misto.classList.remove("druhy_ramecek");
+                presunuta_karta_element.classList.remove("druhy_ramecek");
+                break;
+            case 2:
+                cilove_misto.classList.remove("treti_ramecek");
+                presunuta_karta_element.classList.remove("treti_ramecek");
+                break;
         }
 
-        pocet_tahu--;
-        
-        const presunuta_karta_element = document.getElementById(zakliknuta_karta_id);
-        const cilove_misto = document.getElementById(id_prazdneho_mista);
-        
+        //
+
+        //
+
         // --- LOGIKA DAT ---
         // Najdeme kartu v inventáři a přesuneme ji do pole "na stole"
         let index_nalezene_karty = -1;
         for (let i = 0; i < hrac_inventar_objekty_karty.length; i++) {
-            if (hrac_inventar_objekty_karty[i].id === zakliknuta_karta_id) {
+            if (hrac_inventar_objekty_karty[i].id === vybrane_karty[vybrane_karty_index]) {
                 index_nalezene_karty = i;
                 break;
             }
@@ -161,7 +193,7 @@ function presunuti_karty(id_prazdneho_mista) {
 
         // Reset stavu
         je_zakliknuta_karta = false;
-        zakliknuta_karta_id = null;
+        //zakliknuta_karta_id = null;
 
         // Vypnutí ostatních prázdných míst
         let prazdna_mista = document.querySelectorAll(".prazdne_misto");
@@ -170,12 +202,92 @@ function presunuti_karty(id_prazdneho_mista) {
             m.onclick = null;
         });
 
-        // Konec tahu hráče -> hraje PC? Záleží na pravidlech, zatím voláme logiku PC
-        protihrac_vybrani_random_karty();
+        
+       
+
+
+        vybrane_karty_index++;
+    //}
+}
+else{
+    if(pocet_tahu >0){
+        pocet_tahu--;
+        console.log("nespustí se, protože hráč nepotvrdil tahy.");
+        if(prvni_tah==null){
+            prvni_tah=presunuti_karty.bind(null,id_prazdneho_mista);
+        }
+        else if(druhy_tah==null){
+            druhy_tah=presunuti_karty.bind(null,id_prazdneho_mista);
+        }
+        else if(treti_tah==null){
+            treti_tah=presunuti_karty.bind(null,id_prazdneho_mista);
+        }
+
+         //Orámečkování vybrané karty a prázdného místa
+        switch(vybrane_karty_index){
+            case 0:
+                cilove_misto.classList.add("prvni_ramecek");
+                presunuta_karta_element.classList.add("prvni_ramecek");
+                break;
+            case 1:
+                cilove_misto.classList.add("druhy_ramecek");
+                presunuta_karta_element.classList.add("druhy_ramecek");
+                break;
+            case 2:
+                cilove_misto.classList.add("treti_ramecek");
+                presunuta_karta_element.classList.add("treti_ramecek");
+                break;
+        }
+
+        //
+        vybrane_karty_index++;
     }
+    else
+        console.log("Hráč už nemá tahy.");
+}
 }
 
+
 function pridani_karty(hrac_nebo_protihrac) {
+    if(hrac_nebo_protihrac==="hrac"&&spusteni_tahu==false){
+        if(pocet_tahu >0){
+        pocet_tahu--;
+        console.log("nespustí se, protože hráč nepotvrdil tahy.");
+        if(prvni_tah==null){
+            prvni_tah=pridani_karty.bind(null,hrac_nebo_protihrac);
+            console.log(prvni_tah);
+        }
+        else if(druhy_tah==null){
+            druhy_tah=pridani_karty.bind(null,hrac_nebo_protihrac);
+            console.log(druhy_tah);
+        }
+        else if(treti_tah==null){
+            treti_tah=pridani_karty.bind(null,hrac_nebo_protihrac);
+            console.log(treti_tah);
+        }
+
+        let btn = document.getElementById("pridavani_karet");
+
+         //Orámečkování vybrané karty a prázdného místa
+        switch(vybrane_karty_index){
+            case 0:
+                btn.classList.add("prvni_ramecek");
+                break;
+            case 1:
+                btn.classList.add("druhy_ramecek");
+                break;
+            case 2:
+                btn.classList.add("treti_ramecek");
+                break;
+        }
+
+        //
+        vybrane_karty_index++;
+    }
+    else
+        console.log("Hráč už nemá tahy.");
+    return;
+    }
     // Zjistíme, jestli má hráč/protihráč místo v ruce
     let inventar = (hrac_nebo_protihrac === "hrac") ? hrac_inventar_objekty_karty : protihrac_inventar_objekty_karty;
     
@@ -195,7 +307,6 @@ function pridani_karty(hrac_nebo_protihrac) {
     // Uložení do pole objektů
     if (hrac_nebo_protihrac === "hrac") {
         hrac_inventar_objekty_karty.push(nova_karta_objekt);
-        if (pocet_kol > 1) pocet_tahu--; // Odečíst tah jen pokud to není start hry
     } else {
         protihrac_inventar_objekty_karty.push(nova_karta_objekt);
     }
@@ -267,14 +378,14 @@ function utok(karta_element_nebo_id) {
     let utocnik_id = (karta_element_nebo_id instanceof Element) ? karta_element_nebo_id.id : karta_element_nebo_id;
 
     // Najdeme útočící kartu v poli hráče
-    utocici_karta_objekt = hrac_prostredek_objekty_karty.find(k => k.id === utocnik_id);
+    utocici_karty_objekty[utocici_karty_objekty_index] = hrac_prostredek_objekty_karty.find(k => k.id === utocnik_id);
     
-    if (!utocici_karta_objekt) {
+    if (!utocici_karty_objekty[utocici_karty_objekty_index]) {
         console.log("Chyba: Útočící karta nenalezena v poli hráče.");
         return;
     }
 
-    console.log("Vybrán útočník:", utocici_karta_objekt);
+    console.log("Vybrán útočník:", utocici_karty_objekty[utocici_karty_objekty_index]);
 
     // Nastavíme karty protihráče jako cíle
     protihrac_prostredek_objekty_karty.forEach(objekt => {
@@ -288,22 +399,21 @@ function utok(karta_element_nebo_id) {
 
 function snizeni_hp(cil_id) {
     if (hraje_hrac) {
+        console.log(spusteni_tahu);
+        if(spusteni_tahu){
         // --- HRÁČ ÚTOČÍ NA PROTIHRÁČE ---
-        if (pocet_tahu <= 0) return;
-        pocet_tahu--;
-
-        let index_cile = protihrac_prostredek_objekty_karty.findIndex(k => k.id === cil_id);
+        let index_cile = protihrac_prostredek_objekty_karty.findIndex(k => k.id === cil_id.id);
         if (index_cile === -1) return;
-
         let cilovy_objekt = protihrac_prostredek_objekty_karty[index_cile];
         
         // Výpočet poškození
-        cilovy_objekt.hp -= utocici_karta_objekt.dmg;
-        console.log(`Zásah! Karta ${cil_id} má nyní ${cilovy_objekt.hp} HP.`);
+        console.log(utocici_karty_objekty,utocici_karty_objekty_index);
+        console.log(utocici_karty_objekty[utocici_karty_objekty_index]);
+        cilovy_objekt.hp -= utocici_karty_objekty[utocici_karty_objekty_index].dmg;
 
         // Kontrola smrti karty
         if (cilovy_objekt.hp <= 0) {
-            let el = document.getElementById(cil_id);
+            let el = document.getElementById(cil_id.id);
             // Vrátíme slot do původního stavu
             let rodic = el.parentElement;
             el.remove();
@@ -313,9 +423,6 @@ function snizeni_hp(cil_id) {
             // Odstranění z pole objektů
             protihrac_prostredek_objekty_karty.splice(index_cile, 1);
         }
-
-        // Konec tahu hráče -> Start tahu AI
-        hraje_hrac = false;
         
         // Vyčistit click listenery na kartách protihráče
         protihrac_prostredek_objekty_karty.forEach(obj => {
@@ -325,10 +432,50 @@ function snizeni_hp(cil_id) {
                 el.onclick = null;
             }
         });
+        utocici_karty_objekty_index++;
+        }
+    else{
+        if(pocet_tahu >0){
+        pocet_tahu--;
+        let cil_element = document.getElementById(cil_id);
+        console.log("nespustí se, protože hráč nepotvrdil tahy.");
+        if(prvni_tah==null){
+            prvni_tah=snizeni_hp.bind(null,cil_element);
+            console.log(prvni_tah);
+        }
+        else if(druhy_tah==null){
+            druhy_tah=snizeni_hp.bind(null,cil_element);
+            console.log(druhy_tah);
+        }
+        else if(treti_tah==null){
+            treti_tah=snizeni_hp.bind(null,cil_element);
+            console.log(treti_tah);
+        }
 
-        protihrac_random_tahy();
+         //Orámečkování vybrané karty a prázdného místa
+        switch(vybrane_karty_index){
+            case 0:
+                cil_element.classList.add("prvni_ramecek");
+                break;
+            case 1:
+                cil_element.classList.add("druhy_ramecek");
+                break;
+            case 2:
+                cil_element.classList.add("treti_ramecek");
+                break;
+        }
 
-    } else {
+        //
+        vybrane_karty_index++;
+        utocici_karty_objekty_index++;
+    }
+    else
+        console.log("Hráč už nemá tahy.");
+}
+    }
+
+    else {
+        console.log("NEHRAJE HRAČ")
         // --- PROTIHRÁČ ÚTOČÍ NA HRÁČE (AI LOGIKA) ---
         // Zde cil_id je ID karty HRÁČE, na kterou útočí AI
         // A musíme vědět, KDO z AI karet útočil. To nám musí poslat funkce protihrac_random_tahy
@@ -364,6 +511,7 @@ function proved_utok_ai(utocnik_objekt, obrance_objekt) {
 
 
 async function protihrac_random_tahy() {
+    hraje_hrac = false;
     let protihrac_tahy = 3;
     console.log("--- Začíná tah protihráče ---");
 
@@ -425,11 +573,53 @@ async function protihrac_random_tahy() {
     console.log("Protihráč dohrál.");
     pocet_kol++;
     hraje_hrac = true;
-    pocet_tahu = 3; // Reset tahů hráče
     console.log("Jsi na řadě! Tahy: " + pocet_tahu);
 }
 
 // Jednoduchá funkce pro čekání
 function pauza(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+
+function potvrzeni_tahu(){
+    if(pocet_tahu<3){
+
+    vybrane_karty_index=0;  //Proto aby fungovalo dobře přesouvání karet;
+
+    spusteni_tahu = true;
+    console.log("spusteni_tahu prvni_tah");
+    utocici_karty_objekty_index=0;  //Aby fungovalo útočení
+    prvni_tah();
+    prvni_tah=null;
+    if(druhy_tah !=null){
+        console.log("spusteni_tahu druhy_tah");
+        druhy_tah();
+        druhy_tah=null;
+        if(treti_tah!=null)
+        {
+            console.log("spusteni_tahu treti_tah");
+            treti_tah();
+            treti_tah=null;
+        }
+    }
+    protihrac_random_tahy();
+    pocet_tahu = 3;
+    spusteni_tahu = false;
+
+    //Pro funkční přesouvání karet a útočení je to potřeba nullovat
+    
+    for(let i =0;i<3;i++){
+        vybrane_karty[i]=null;
+        utocici_karty_objekty[i]=null;
+    }
+    utocici_karty_objekty_index=0;
+    vybrane_karty_index=0;
+    }
+
+    //
+    else
+    {
+        console.log("Hráč neudělal ani jeden tah.");
+    }
 }

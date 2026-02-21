@@ -5,7 +5,7 @@
             grid-template-columns:repeat(5,15%);
             column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
             width: 60vw;
-            border: 2px solid red;
+            border: 2px solid hsl(0, 49%, 69%);
         }
 #hracovy_karty{
             /*margin-left:10vw;
@@ -14,7 +14,7 @@
             grid-template-columns:repeat(5,15%);
             column-gap:6.7%; /*Dodělat, aby to pasovalo s divem */
             width: 60vw;
-            border: 2px solid blue;
+            border: 2px solid rgb(145, 145, 226);
         }
 #pole_vykladani_protihrace{
             /*margin-left:10vw;
@@ -23,7 +23,7 @@
             grid-template-columns:repeat(4,20%);
             column-gap:8%; /*Dodělat, aby to pasovalo s divem */
             width: 60vw;
-            border: 2px solid red;
+            border: 2px solid hsl(0, 49%, 69%);
         }
 #pole_vykladani_hrace{
             /*margin-left:10vw;
@@ -33,7 +33,7 @@
             grid-template-columns:repeat(4,20%);
             column-gap:8%; /*Dodělat, aby to pasovalo s divem */
             width: 60vw;
-            border: 2px solid blue;
+            border: 2px solid rgb(145, 145, 226);
         }
         .karty{
             width:100px;
@@ -173,7 +173,13 @@ grid-template-columns: 15%70%15%;
     align-items: center;
     justify-content:center;
 }        
-        
-        
-
+.prvni_ramecek{
+    border: 4px solid blue;
+}    
+.druhy_ramecek{
+    border: 4px solid green;
+}       
+.treti_ramecek{
+    border: 4px solid yellow;
+}   
 
