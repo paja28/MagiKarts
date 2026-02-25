@@ -2,8 +2,8 @@
 <html lang="cs">
 <head>
     <link rel="stylesheet" href="karty_pole.css">
-    <script type="text/javascript" src="zaklikavani_karet.js"></script>
     <script type="text/javascript" src="karty_objekty.js"></script>
+    <script type="text/javascript" src="zaklikavani_karet.js"></script>
     <script type="text/javascript" src="cas.js"></script>
     
     <meta charset="UTF-8">
@@ -12,19 +12,23 @@
     
 </head>
 <body>
+    <div id="leva_strana">
+    
+        <img id="pridavani_karet" src ="pridavani_karet.png" alt="pridavani_karet_obrazek"onclick="pridani_karty(`hrac`)">
+    
+    </div>
+    
+
+    <div id="herni_pole">
+
 <div id="protihracovy_karty">
-<img id="protihrac_karta1"class="karty" src = 'lucistnik.png'>	
-<img id="protihrac_karta2"class="karty" src = 'lucistnik.png'>	
-<img id="protihrac_karta3"class="karty" src = 'lucistnik.png'>	
-<img id="protihrac_karta4"class="karty" src = 'lucistnik.png'>	
-<img id="protihrac_karta5"class="karty" src = 'lucistnik.png'>	
 </div>
 
-<div id="pole_vykladani_protivnika">
-<div id="protihrac_pole_karta1" class="prazdne_misto">Prazdné_místo</div>
-<div id="protihrac_pole_karta2" class="prazdne_misto">Prazdné_místo</div>
-<div id="protihrac_pole_karta3" class="prazdne_misto">Prazdné_místo</div>
-<div id="protihrac_pole_karta4" class="prazdne_misto">Prazdné_místo</div>
+<div id="pole_vykladani_protihrace">
+<div id="protihrac_pole_karta1" class="protivnik_prazdne_misto">Prazdné_místo</div>
+<div id="protihrac_pole_karta2" class="protivnik_prazdne_misto">Prazdné_místo</div>
+<div id="protihrac_pole_karta3" class="protivnik_prazdne_misto">Prazdné_místo</div>
+<div id="protihrac_pole_karta4" class="protivnik_prazdne_misto">Prazdné_místo</div>
 </div>
 
 <div id="pole_vykladani_hrace">
@@ -35,15 +39,12 @@
 </div>
 
 <div id="hracovy_karty">
-<img id="karta1" class="karty vysouvani_karet" onclick="nakliknuto('karta1')" src="spartan.jpg">
-<img id="karta2" class="karty vysouvani_karet" onclick="nakliknuto('karta2')" src="spartan.jpg">
-<img id="karta3" class="karty vysouvani_karet" onclick="nakliknuto('karta3')" src="spartan.jpg">
-<img id="karta4" class="karty vysouvani_karet" onclick="nakliknuto('karta4')" src="spartan.jpg">
-<img id="karta5" class="karty vysouvani_karet" onclick="nakliknuto('karta5')" src="spartan.jpg">
 </div>
 
-<div id="pridavani_karet" onclick="pridani_karty()">Klikni</div>
+    </div>
+        
 
+<div id="informacni_okno">
 <div id = "hodiny">
     <b>Čas:</b>
     <div id = "stopky" src = "cas.js">00:00:00</div>    
@@ -55,7 +56,8 @@
 
 <div id = informace>Informace</div>
 
-<div id="konecTahu" onclick="pridani_karty()">Konec</div>
-
+<div id="konecTahu" onclick="potvrzeni_tahu()">Konec</div>
+</div>
 </body>
 </html>
+
