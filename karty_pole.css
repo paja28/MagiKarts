@@ -7,8 +7,7 @@
     align-items: center;
     width: 100%;
     margin: 10px 0;
-    border: 1px solid blue;
-    background-image: url("pozadi_inventar.png");
+    background-image: url("./Obrazky/prazdne_misto.png");
     background-size:contain;
 }
 
@@ -28,7 +27,7 @@
 }
 
 /* Úprava samotných karet */
-.karty, .prazdne_misto, .protivnik_prazdne_misto {
+.protihrac_karty,.karty, .prazdne_misto, .protivnik_prazdne_misto {
     /* Místo width: 100px použijeme: */
     width: 100%;
     max-width: 100px; 
@@ -36,7 +35,7 @@
     height: auto;
     object-fit: contain;
 }
-        .karty{
+        .protihrac_karty,.karty{
             width:100px;
             height:150px;
         }
