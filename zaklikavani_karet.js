@@ -232,7 +232,6 @@ if(spusteni_tahu){
         // Zrušíme prázdné místo (nebo do něj vložíme kartu)
         // Tvůj systém používá "zrušení prázdného místa" a vložení karty.
         // Aby se nerozbilo ID slotu, uděláme to takto:
-        cilove_misto.innerHTML = ""; // Vyčistíme text "Prázdné místo"
         cilove_misto.appendChild(presunuta_karta_element);
         cilove_misto.classList.remove("clickable");
         cilove_misto.onclick = null; // Už nejde kliknout jako na prázdné místo
@@ -496,7 +495,6 @@ function protihrac_presunuti_karty(objekt_karty) {
         let slot_element = document.getElementById(slot_id);
 
         
-        slot_element.innerHTML = ""; // Smazat "Prázdné místo"
         slot_element.appendChild(karta_element);
         }
         else{
@@ -566,7 +564,6 @@ function snizeni_hp(cil_id) {
                 let el = document.getElementById(spravne_id);
                 let rodic = el.parentElement;
                 el.remove();
-                rodic.innerHTML = "Prázdné místo";
                 protihrac_prostredek_prazdne_misto.push(rodic.id); 
                 
                 // Odstranění z pole (najdeme si index znovu, protože to mohla být tvoje nebo soupeřova karta)
@@ -718,8 +715,6 @@ function proved_utok_ai(utocnik_objekt, obrance_objekt) {
         let el = document.getElementById(obrance_objekt.id);
         let rodic = el.parentElement;
         el.remove();
-        rodic.innerHTML = "Prázdné_místo"; // Nebo tam dát zpátky prázdný div, záleží na tvém HTML
-        
         // Najít a smazat z pole
         let index = hrac_prostredek_objekty_karty.indexOf(obrance_objekt);
         if (index > -1) hrac_prostredek_objekty_karty.splice(index, 1);
