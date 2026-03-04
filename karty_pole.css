@@ -7,7 +7,7 @@
     align-items: center;
     width: 100%;
     margin: 10px 0;
-    background-image: url("./Obrazky/prazdne_misto.png");
+    background-image: url("./Obrazky/pozadi.png");
     background-size:contain;
 }
 
@@ -82,7 +82,7 @@
         .prazdne_misto, .protivnik_prazdne_misto{
             width: 100px;
             height: 150px;
-            background-image: url("./Obrazky/pozadi.png");
+            background-image: url("./Obrazky/prazdne_misto.png");
             background-size:cover;
             text-align:center;
         }
