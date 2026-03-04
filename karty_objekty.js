@@ -59,5 +59,11 @@ const Lecitel = {
 	img:"Obrazky/lecitel.png",
 	id:"",
 	trida:"Magic"
-
+}
+const Lucistnik = {
+	hp: 25,
+	dmg: 10,
+	img: "Obrazky/lucistnik.png",
+	id:"",
+	trida:"Light"
 }
