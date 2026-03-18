@@ -288,7 +288,7 @@ else{
 
         //Začátek 
         pocet_tahu--;
-        console.log("nespustí se, protože hráč nepotvrdil tahy.");
+        document.getElementById("konecTahu").classList.add("clickable");
         if(prvni_tah==null){
             prvni_tah=presunuti_karty.bind(null,id_prazdneho_mista);
         }
@@ -359,8 +359,10 @@ function pridani_karty(hrac_nebo_protihrac) {
                 console.log("Nelze přidat více karet, nebylo by místo v inventáři");
                 return;
             }
+        
+        //Začátek
         pocet_tahu--;
-        console.log("nespustí se, protože hráč nepotvrdil tahy.");
+        document.getElementById("konecTahu").classList.add("clickable");
         if(prvni_tah==null){
             prvni_tah=pridani_karty.bind(null,hrac_nebo_protihrac);
             console.log(prvni_tah);
@@ -631,7 +633,10 @@ function snizeni_hp(cil_id) {
                     console.log("Hráč nemůže útočit/healovat stejnou kartou více karet.");
                     return;
                 }
+
+                //Začátek
                 pocet_tahu--;
+                document.getElementById("konecTahu").classList.add("clickable");
                 let cil_element = document.getElementById(spravne_id);
 
                 // ZMĚNA ZDE: Ukládáme rovnou to ID (text), je to bezpečnější než element
@@ -826,9 +831,10 @@ function potvrzeni_tahu(){
 
     vybrane_karty_index=0;  //Proto aby fungovalo dobře přesouvání karet;
 
+    let potvrzovaci_tlacitko = document.getElementById("konecTahu").classList.remove("clickable");    //Změna kurzoru při najetí na potvrzení tahu
     spusteni_tahu = true;
-    console.log("spusteni_tahu prvni_tah");
     utocici_karty_objekty_index=0;  //Aby fungovalo útočení
+    console.log("spusteni_tahu prvni_tah");
     prvni_tah();
     prvni_tah=null;
     if(druhy_tah !=null){
@@ -842,7 +848,10 @@ function potvrzeni_tahu(){
             treti_tah=null;
         }
     }
+    //Hraje protihráč
     protihrac_random_tahy();
+
+    //Hráč je znovu na tahu
     pocet_tahu = 3;
     spusteni_tahu = false;
 
