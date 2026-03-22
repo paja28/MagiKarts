@@ -54,7 +54,7 @@ window.onload = function() {
     }
     spusteni_tahu=false;
     vybrane_karty_index = 0;
-    console.log("Hra připravena!");
+    this.document.getElementById("kola").innerHTML="Kola<br><br>Počet kol: "+pocet_kol;
 }
 
 // Pomocná funkce pro unikátní ID
@@ -463,21 +463,41 @@ else
 
 // --- LOGIKA PROTIHRÁČE ---
 
-function protihrac_vybrani_random_karty() {
+function protihrac_vybrani_random_karty(muze_vylozit_spell) {
     // Kontrola, zda může vynést (má místo a má karty)
-    if (protihrac_prostredek_objekty_karty.length < 4 && protihrac_inventar_objekty_karty.length > 0) {
-        console.log("Protihráč vybírá kartu...");
         let random = Math.floor(Math.random() * protihrac_inventar_objekty_karty.length);
         let vybrana_objekt = protihrac_inventar_objekty_karty[random];
+        if(muze_vylozit_spell){
+            while(vybrana_objekt.trida!="Spell"){
+                random++;
+                if(protihrac_inventar_objekty_karty.length-1<random)
+                    random=0;
+                vybrana_objekt=protihrac_inventar_objekty_karty[random];
+            }
+        }
         let karta_element = document.getElementById(vybrana_objekt.id);
         
+        console.log(vybrana_objekt);
+        if(vybrana_objekt.trida==="Spell")
+        {
+            if(vybrana_objekt.dmg>0&&hrac_prostredek_objekty_karty.length<1){
+                return 10;
+            }
+            else if(vybrana_objekt.dmg<0&&protihrac_prostredek_objekty_karty.length<1){
+                console.log(protihrac_prostredek_objekty_karty);
+                console.log("returninguje."+protihrac_prostredek_objekty_karty);
+                return 10;
+            }
+        }
+        console.log("Protihráč vybírá kartu...");
         karta_element.classList.add("vysouvani_karet_protihrace");
         setTimeout(() => protihrac_presunuti_karty(vybrana_objekt), 1000);
-    }
 }
+
 //Protihráč, přesunutí karty na střed, nebo využití spellu z inventáře
 function protihrac_presunuti_karty(objekt_karty) {
     if (protihrac_prostredek_prazdne_misto.length > 0||objekt_karty.trida==="Spell") {
+        
         // Najdi objekt v inventáři
         let index = protihrac_inventar_objekty_karty.findIndex(k => k.id === objekt_karty.id);
         if (index === -1) return; // Chyba, karta nenalezena
@@ -500,8 +520,15 @@ function protihrac_presunuti_karty(objekt_karty) {
         slot_element.appendChild(karta_element);
         }
         else{
+            let obrance_objekt;
+            if(objekt_karty.dmg>0){
             let random = Math.floor(Math.random()*hrac_prostredek_objekty_karty.length);
-            let obrance_objekt = hrac_prostredek_objekty_karty[random];
+            obrance_objekt = hrac_prostredek_objekty_karty[random];
+            }
+            else{
+            let random = Math.floor(Math.random()*protihrac_prostredek_karty.length);
+            obrance_objekt = protihrac_prostredek_objekty_karty[random];   
+            }
             proved_utok_ai(objekt,obrance_objekt);
             karta_element.remove();
             let index = protihrac_inventar_objekty_karty.findIndex(k => k.id === objekt.id);
@@ -711,8 +738,6 @@ function snizeni_hp(cil_id) {
 
 // Speciální verze funkce pro AI útok, aby to bylo přehlednější
 function proved_utok_ai(utocnik_objekt, obrance_objekt) {
-    console.log(`AI útočí s ${utocnik_objekt.id} na tvoji ${obrance_objekt.id}`);
-    
     obrance_objekt.hp -= utocnik_objekt.dmg;
     
     if (obrance_objekt.hp <= 0) {
@@ -744,16 +769,25 @@ async function protihrac_random_tahy() {
         
         // 1. Zjistíme, jaké akce jsou vůbec momentálně možné
         let muze_vylozit = protihrac_prostredek_objekty_karty.length < 4 && protihrac_inventar_objekty_karty.length > 0;
-        let muze_vylozit_spell=false;
-        if(hrac_prostredek_objekty_karty.length>0){
-            for(let i =0;i<protihrac_inventar_objekty_karty.length;i++){
-                if(protihrac_inventar_objekty_karty[i].trida==="Spell")
+        let muze_vylozit_spell= false;
+        if(!muze_vylozit){
+        for(let i =0;i<protihrac_inventar_objekty_karty.length;i++){
+            if(protihrac_inventar_objekty_karty[i].trida=="Spell")
+            {
+                if(protihrac_inventar_objekty_karty[i].dmg>0&&hrac_prostredek_objekty_karty.length>0)
                 {
                     muze_vylozit=true;
-                    muze_vylozit_spell=false;
+                    muze_vylozit_spell=true;
+                    break;
+                }
+                else if(protihrac_prostredek_objekty_karty.length>0)
+                {
+                    muze_vylozit=true;
+                    muze_vylozit_spell=true;
                     break;
                 }
             }
+        }
         }
         let muze_liznout = protihrac_inventar_objekty_karty.length < 5;
         let muze_utocit = protihrac_prostredek_objekty_karty.length > 0 && hrac_prostredek_objekty_karty.length > 0;
@@ -778,7 +812,8 @@ async function protihrac_random_tahy() {
         // 5. Samotné provedení
         switch (akce) {
             case 0:
-                protihrac_vybrani_random_karty();
+                if(protihrac_vybrani_random_karty(muze_vylozit_spell)==10)
+                protihrac_tahy++;
                 break;
             case 1:
                 pridani_karty("protihrac");
@@ -786,10 +821,26 @@ async function protihrac_random_tahy() {
             case 2:
                 let rand_moje = Math.floor(Math.random() * protihrac_prostredek_objekty_karty.length);
                 let rand_tvoje = Math.floor(Math.random() * hrac_prostredek_objekty_karty.length);
-                
                 let utocnik = protihrac_prostredek_objekty_karty[rand_moje];
-                let obrance = hrac_prostredek_objekty_karty[rand_tvoje];
-
+                let obrance;    
+                if(utocnik.dmg>0)
+                obrance = hrac_prostredek_objekty_karty[rand_tvoje];
+                else{
+                    if(protihrac_prostredek_objekty_karty.length<1)
+                    {
+                        protihrac_tahy++;
+                        break;
+                    }
+                    let random=Math.floor(Math.random()*protihrac_prostredek_objekty_karty.length);
+                    obrance = protihrac_prostredek_objekty_karty[random];
+                    if(obrance.id===utocnik.id){
+                        if(random-1<0)
+                            random++;
+                        else 
+                            random--;
+                        obrance = protihrac_prostredek_objekty_karty[random];
+                    }
+                }
                 proved_utok_ai(utocnik, obrance);
                 break;
         }
@@ -802,7 +853,7 @@ async function protihrac_random_tahy() {
     pocet_kol++;
     hraje_hrac = true;
     console.log("Jsi na řadě! Tahy: " + pocet_tahu);
-
+    document.getElementById("kola").innerHTML="Kola<br><br>Počet kol: "+pocet_kol;
     // --- PŘIDÁNO: Oživení tlačítka na začátku tvého tahu ---
     let btn = document.getElementById("pridavani_karet");
     if (hrac_inventar_objekty_karty.length < 5) {
@@ -834,16 +885,13 @@ function potvrzeni_tahu(){
     let potvrzovaci_tlacitko = document.getElementById("konecTahu").classList.remove("clickable");    //Změna kurzoru při najetí na potvrzení tahu
     spusteni_tahu = true;
     utocici_karty_objekty_index=0;  //Aby fungovalo útočení
-    console.log("spusteni_tahu prvni_tah");
     prvni_tah();
     prvni_tah=null;
     if(druhy_tah !=null){
-        console.log("spusteni_tahu druhy_tah");
         druhy_tah();
         druhy_tah=null;
         if(treti_tah!=null)
         {
-            console.log("spusteni_tahu treti_tah");
             treti_tah();
             treti_tah=null;
         }
@@ -962,3 +1010,16 @@ function healovani(karta_element_nebo_id) {
         }
     });
 } 
+
+function smazani_ostatnich_fci(zakliknuta_funkce){
+switch(zakliknuta_funkce){
+    case 0: //nakliknuto
+        for(let i =0;i<protihrac_prostredek_objekty_karty.length;i++){
+            
+        }
+        break;
+
+    case 1: //utok
+        break;
+}
+}

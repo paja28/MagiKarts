@@ -1,4 +1,8 @@
-        /* Společné nastavení pro všechny gridy s kartami */
+html,body{
+    height:100%;
+    width:100%;
+}
+       /* Společné nastavení pro všechny gridy s kartami */
 #protihracovy_karty, #hracovy_karty, 
 #pole_vykladani_protihrace, #pole_vykladani_hrace {
     display: grid;
@@ -15,6 +19,7 @@
 #protihracovy_karty, #hracovy_karty {
     grid-template-columns: repeat(5, 1fr);
     gap: 10px; /* Mezera mezi kartami v pixelech je bezpečnější než % */
+    height: 150px;
 }
 
 /* 4 sloupce pro vykládací pole */
@@ -112,34 +117,29 @@
             order: 4;
         }
 #hodiny{
-    height: 9vh;
+    height: 5vh;
     width: 10vw;
-    background-color: lightgreen;
-    border: 5px solid darkgreen;
+    background-color: #EBE288;
 }
 #kola{
-    height: 9vh;
-    width: 10vw;
-    background-color: yellow;
-    border: 5px solid darkorange;
-}
-#body{
-    height: 9vh;
-    width: 10vw;
-    background-color: violet;
-    border: 5px solid darkviolet;
-}
-#informace{
-    height: 49vh;
-    width: 10vw;
-    background-color: lightskyblue;
-    border: 5px solid darkblue;
-}
-#konecTahu{
     height: 10vh;
     width: 10vw;
-    background-color: rosybrown;
-    border: 5px solid darkred;
+    background-color: #EBD688;
+}
+#body{
+    height: 10vh;
+    width: 10vw;
+    background-color: #EBCA88;
+}
+#informace{
+    height: 60vh;
+    width: 10vw;
+    background-color: #EBBC88;
+}
+#konecTahu{
+    height: 15vh;
+    width: 10vw;
+    background-color: #EBAB88;
 }
 #herni_pole{
     width: 100%;
@@ -152,7 +152,7 @@
 #informacni_okno{
     display:flex;
     flex-direction: column;
-    align-items: flex-end;
+    align-items:flex-end;
 }
 /* Základní nastavení pro mobily (vše pod sebou) */
 body {
@@ -160,18 +160,6 @@ body {
     grid-template-columns: 15% 70% 15%;
     margin: 0;
     background-color: #d4c2b683;
-}
-
-/* Nastavení pro tablety a počítače */
-@media (min-width: 768px) {
-    body {
-        display: grid;
-        grid-template-columns: 15% 70% 15%;
-    }
-    
-    #informacni_okno {
-
-    }
 }
 
 .clickable{
