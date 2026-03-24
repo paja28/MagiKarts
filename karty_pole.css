@@ -1,3 +1,8 @@
+@font-face {
+    font-family: pixel_font;
+    src: url("./fonts/Pixelify_Sans/static/PixelifySans-Regular.ttf");
+}
+
 html,body{
     height:100%;
     width:100%;
@@ -154,8 +159,9 @@ html,body{
     flex-direction: column;
     align-items:flex-end;
 }
-/* Základní nastavení pro mobily (vše pod sebou) */
+
 body {
+    font-family:pixel_font;
     display: grid;
     grid-template-columns: 15% 70% 15%;
     margin: 0;

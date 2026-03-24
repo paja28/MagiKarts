@@ -67,6 +67,7 @@ function vygeneruj_nove_id() {
 function nakliknuto(id) {
     // Pokud nehraje hráč, neměl by mít možnost klikat (pokud to není obrana)
     if (!hraje_hrac && pocet_tahu <= 0) return;
+    smazani_ostatnich_fci();
 
     let karta = document.getElementById(id);
     let prazdna_mista;
@@ -365,15 +366,12 @@ function pridani_karty(hrac_nebo_protihrac) {
         document.getElementById("konecTahu").classList.add("clickable");
         if(prvni_tah==null){
             prvni_tah=pridani_karty.bind(null,hrac_nebo_protihrac);
-            console.log(prvni_tah);
         }
         else if(druhy_tah==null){
             druhy_tah=pridani_karty.bind(null,hrac_nebo_protihrac);
-            console.log(druhy_tah);
         }
         else if(treti_tah==null){
             treti_tah=pridani_karty.bind(null,hrac_nebo_protihrac);
-            console.log(treti_tah);
         }
 
         let btn = document.getElementById("pridavani_karet");
@@ -411,7 +409,24 @@ function pridani_karty(hrac_nebo_protihrac) {
     let random_index = Math.floor(Math.random() * pole_karet.length);
     // Vytvoření kopie objektu
     let nova_karta_objekt = { ...pole_karet[random_index] };
-    
+
+    //Kontrola jestli je v inventáři více spellů 
+    if(inventar.length>3){
+        let pocet_spellu;
+        for(let i =0;i<inventar.length;i++){
+            if(inventar[i].trida==="Spell")
+                pocet_spellu++;
+        }
+        if(nova_karta_objekt.trida==="Spell")
+            pocet_spellu++;
+        if(pocet_spellu>3){
+            while(nova_karta_objekt.trida==="Spell"){
+                random_index = Math.floor(Math.random() * pole_karet.length);
+                nova_karta_objekt = { ...pole_karet[random_index] };
+            }
+        }
+    }
+
     // ZMĚNA: Generování nového ID
     nova_karta_objekt.id = vygeneruj_nove_id(); 
 
@@ -541,6 +556,7 @@ function protihrac_presunuti_karty(objekt_karty) {
 
 function utok(karta_element_nebo_id) {
     // Získáme ID (pokud je předán element, vezmeme jeho ID)
+    smazani_ostatnich_fci();
     let utocnik_id = (karta_element_nebo_id instanceof Element) ? karta_element_nebo_id.id : karta_element_nebo_id;
 
     // Najdeme útočící kartu v poli hráče
@@ -1011,15 +1027,12 @@ function healovani(karta_element_nebo_id) {
     });
 } 
 
-function smazani_ostatnich_fci(zakliknuta_funkce){
-switch(zakliknuta_funkce){
-    case 0: //nakliknuto
-        for(let i =0;i<protihrac_prostredek_objekty_karty.length;i++){
-            
-        }
-        break;
-
-    case 1: //utok
-        break;
-}
+function smazani_ostatnich_fci(){
+    let pole_vykladani_protihrace = document.getElementById("pole_vykladani_protihrace");
+    let snizeni_hp_karty_protihrac = pole_vykladani_protihrace.querySelectorAll("snizeni_hp");
+    console.log(snizeni_hp_karty_protihrac);
+    snizeni_hp_karty_protihrac.forEach(karty => {
+        karty.onclick=null;
+        karty.classList.remove("clickable");
+    });
 }
