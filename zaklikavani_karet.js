@@ -740,7 +740,16 @@ function snizeni_hp(cil_id) {
             if(utocici_karty_objekty[utocici_karty_objekty_index].dmg > 0){
                 // Hledáme cíl u protihráče (útok)
                 let index_cile = protihrac_prostredek_objekty_karty.findIndex(k => k.id === spravne_id); 
-                if (index_cile === -1) return;
+                if (index_cile === -1){
+                    if(utocici_karty_objekty[utocici_karty_objekty_index].trida==="Spell"){
+                        //Smaže útočící spell, aby se předešlo bugu, že spell zůstane v inventáři, protože karta, na kterou chtěl dané kolo útočit, už zemřela.
+                        let smazat_spell_id = utocici_karty_objekty[utocici_karty_objekty_index].id;
+                        document.getElementById(smazat_spell_id).remove();
+                        let index = hrac_inventar_objekty_karty.findIndex(k => k.id === smazat_spell_id);
+                        if (index > -1) hrac_inventar_objekty_karty.splice(index, 1);
+                    }
+                    return;
+                } 
                 cilovy_objekt = protihrac_prostredek_objekty_karty[index_cile];
             } else {
                 // Hledáme cíl u hráče (heal)
