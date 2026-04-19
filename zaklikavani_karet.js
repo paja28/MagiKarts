@@ -747,6 +747,7 @@ function snizeni_hp(cil_id) {
                         document.getElementById(smazat_spell_id).remove();
                         let index = hrac_inventar_objekty_karty.findIndex(k => k.id === smazat_spell_id);
                         if (index > -1) hrac_inventar_objekty_karty.splice(index, 1);
+                        utocici_karty_objekty_index++;
                     }
                     return;
                 } 
