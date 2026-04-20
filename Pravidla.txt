@@ -2,6 +2,7 @@ PRAVIDLA:
 ----------
 Maximální počet vyložených karet je 4
 Hráč má maximálně 5 karet
+Hráč i protihráč mají maximálně 3 spelly v inventáři
 
 Každá postava kromě kouzel má: HP, DMG, PTS, SEF, CLS
 ----------
