@@ -1,6 +1,6 @@
 @font-face {
     font-family: pixel_font;
-    src: url("./fonts/Pixelify_Sans/static/PixelifySans-Regular.ttf");
+    src: url("./fonts/grixel_kyrou_7_wide/Kyrou\ 7\ Wide\ Xtnd.ttf");
 }
 
 html,body{
@@ -61,29 +61,10 @@ html,body{
             transform: translateY(30px);
         }
 
-        .karty:active{
-            /*Když se na něčem drží tlačítko, tak se to vykonává*/
-        }
-
         .zakliknuta_karta{
             margin-top:-60px;
         }
 
-        #karta1{
-
-        }
-        #karta2{
-            
-        }
-        #karta3{
-            
-        }
-        #karta4{
-            
-        }
-        #karta5{
-            
-        }
         #pridavani_karet{
             width:150px;
             height:225px;
@@ -162,6 +143,8 @@ html,body{
 
 body {
     font-family:pixel_font;
+    font-size:50%;
+    text-align:center;
     display: grid;
     grid-template-columns: 15% 70% 15%;
     margin: 0;
