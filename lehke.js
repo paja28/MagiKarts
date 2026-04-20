@@ -56,18 +56,45 @@ var protihrac_druhy_element_tahu_id = [];
 var index_protihrac_element_tahu = 0;
 // --- HLAVNÍ FUNKCE ---
 
+//Vygeneruje random karty na začátku tahu pro hráče a protihráče
 window.onload = function() {
     // Rozdání počátečních karet
     spusteni_tahu=true;
+    let hrac_dostal_jen_spell=true;
+    let protihrac_dostal_jen_spell=true;
     for (let i = 0; i < 5; i++) {
         pridani_karty("hrac");
-        // Resetujeme tahy, protože přidání karty při startu je nebere
-        pocet_tahu = 3; 
+        pocet_tahu = 3; // Resetujeme tahy, protože přidání karty při startu je nebere
         pridani_karty("protihrac");
+
+        //Kontrola toho, jestli hráč nebo protihráč dostali jenom spelly
+        if(hrac_inventar_objekty_karty[i].trida!="Spell")
+        hrac_dostal_jen_spell=false;
+        if(protihrac_inventar_objekty_karty[i].trida!="Spell")
+            protihrac_dostal_jen_spell=false;
     }
+    //Pokud má hráč v inventáři jen Spelly
+    if(hrac_dostal_jen_spell===true)
+    {
+        while(hrac_inventar_objekty_karty[4].trida==="Spell"){
+            document.getElementById(hrac_inventar_objekty_karty[4].id).remove();
+            hrac_inventar_objekty_karty.splice(4,1);
+            pridani_karty("hrac");
+        }
+    }
+    //Pokud má protihráč v inventáři jen Spelly
+    if(protihrac_dostal_jen_spell===true)
+    {
+        while(protihrac_inventar_objekty_karty[4].trida==="Spell"){
+            document.getElementById(protihrac_inventar_objekty_karty[4].id).remove();
+            protihrac_inventar_objekty_karty.splice(4,1);
+            pridani_karty("protihrac");
+        }
+    }
+    
     spusteni_tahu=false;
     vybrane_karty_index = 0;
-    this.document.getElementById("kola").innerHTML="Kola<br><br>Počet kol: "+pocet_kol;
+    document.getElementById("kola").innerHTML="Kola<br><br>Počet kol: "+pocet_kol;
 }
 
 // Pomocná funkce pro unikátní ID
@@ -181,6 +208,7 @@ function nakliknuto(id) {
     }
 }
 
+//Přesune karty z inventáře na střed
 function presunuti_karty(id_prazdneho_mista) {
     const presunuta_karta_element = document.getElementById(vybrane_karty[vybrane_karty_index]);
     const cilove_misto = document.getElementById(id_prazdneho_mista);
@@ -422,22 +450,6 @@ function pridani_karty(hrac_nebo_protihrac) {
     // Vytvoření kopie objektu
     let nova_karta_objekt = { ...pole_charakteru_karet[random_index] };
 
-    //Kontrola jestli je v inventáři více spellů 
-    if(inventar.length>3){
-        let pocet_spellu;
-        for(let i =0;i<inventar.length;i++){
-            if(inventar[i].trida==="Spell")
-                pocet_spellu++;
-        }
-        if(nova_karta_objekt.trida==="Spell")
-            pocet_spellu++;
-        if(pocet_spellu>3){
-            while(nova_karta_objekt.trida==="Spell"){
-                random_index = Math.floor(Math.random() * pole_charakteru_karet.length);
-                nova_karta_objekt = { ...pole_charakteru_karet[random_index] };
-            }
-        }
-    }
 
     // ZMĚNA: Generování nového ID
     nova_karta_objekt.id = vygeneruj_nove_id(); 
@@ -700,6 +712,10 @@ async function protihrac_random_tahy() {
         let el = document.getElementById(obj.id);
         if(el) el.classList.add("clickable"); 
     });
+
+    //vykonání abilitek na protihráčových kartách
+
+    prohledani_karet_uprostred_ability();
 }
 
 // --- BOJ ---
@@ -772,10 +788,12 @@ function snizeni_hp(cil_id) {
                 let smazat_index = protihrac_prostredek_objekty_karty.findIndex(k => k.id === spravne_id);
                 if(smazat_index > -1) protihrac_prostredek_objekty_karty.splice(smazat_index, 1);
             }
+            //Vykoná se pokud karta nezemře, podemnout
             //maže rámečky u karet, které nezemřely.
             else{
                 let cil_element = document.getElementById(spravne_id);
                 let utocici_karta_hrace = document.getElementById(utocici_karty_objekty[utocici_karty_objekty_index].id);
+                abilitky_karet(utocici_karty_objekty[utocici_karty_objekty_index],cilovy_objekt);
                 switch(vybrane_karty_index){
                     case 0:
                         cil_element.classList.remove("prvni_ramecek");
@@ -806,8 +824,7 @@ function snizeni_hp(cil_id) {
                 let el = document.getElementById(obj.id);
                 if(el) { el.classList.remove("clickable"); el.onclick = null; }
             });
-            
-            // OPRAVA: Tvým kartám nesmíme dát null, musíme jim vrátit původní funkci!
+
             hrac_prostredek_objekty_karty.forEach(obj => {
                 let el = document.getElementById(obj.id);
                 if(el) { 
@@ -920,7 +937,7 @@ function pauza(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
+//Začne dělat hráčovy tahy po stisknutí tlačítka
 function potvrzeni_tahu(){
     if(pocet_tahu<3){
 
@@ -996,7 +1013,10 @@ document.addEventListener('mouseover', (event) => {
         if(najetyElement.id===hrac_prostredek_objekty_karty[i].id)
             objekt_karta = hrac_prostredek_objekty_karty[i];
     }
-    informace.innerHTML+="<br><br>Hráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>DMG:"+objekt_karta.dmg;
+    if(objekt_karta.dmg>0)
+        informace.innerHTML+="<br><br>Hráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>DMG:"+objekt_karta.dmg;
+    else
+        informace.innerHTML+="<br><br>Hráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>Heal:"+(-1*objekt_karta.dmg);
   }
 
   //Psaní informací při najetí na protihráčovy karty
@@ -1009,7 +1029,10 @@ document.addEventListener('mouseover', (event) => {
         if(najetyElement.id===protihrac_prostredek_objekty_karty[i].id)
             objekt_karta = protihrac_prostredek_objekty_karty[i];
     }
-    informace.innerHTML+="<br><br>Protihráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>DMG:"+objekt_karta.dmg;
+    if(objekt_karta.dmg>0)
+        informace.innerHTML+="<br><br>Protihráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>DMG:"+objekt_karta.dmg;
+    else
+        informace.innerHTML+="<br><br>Protihráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>Heal:"+(-1*objekt_karta.dmg);
   }
 
 });
@@ -1119,3 +1142,88 @@ if(hrac_prostredek_objekty_karty.length>0){
     }
 }
 }
+
+//čas podemnou čas script
+
+let startovniCas = Date.now(); //aktualni cas v ms
+
+function vzhled(i) {
+    if (i < 10) { i = "0" + i; }
+    return i;
+}
+
+function aktualniCas() {
+    let nyni = Date.now();
+    let rozdil = nyni - startovniCas; 
+       
+    let s = Math.floor((rozdil / 1000) % 60);   
+    let m = Math.floor((rozdil / (60000)) % 60);    //1000 * 60
+    let h = Math.floor((rozdil / (3600000)));       //1000 * 60 * 60
+    let zobrazeni = vzhled(h) + ":" + vzhled(m) + ":" + vzhled(s);
+    document.getElementById("stopky").innerHTML = zobrazeni;
+}
+
+setInterval(aktualniCas, 1000);
+
+//nademnou čas script
+
+//Fungování abilitek karet podemonu
+function abilitky_karet(utocici_karta_objekt, cilova_karta_objekt){
+    if(utocici_karta_objekt.ability!=""){
+        for(let i =0;i<cilova_karta_objekt.debuff.length;i++){
+            if(cilova_karta_objekt.debuff[i]===utocici_karta_objekt.ability)
+                return;
+        }
+        cilova_karta_objekt.debuff.push(utocici_karta_objekt.ability);
+    }
+}
+
+
+function pouziti_abilitek(debuff_karta_objekt){
+if(debuff_karta_objekt.debuff.length!=0){
+    for(let i =0; i < debuff_karta_objekt.debuff.length;i++){
+        switch(debuff_karta_objekt.debuff[i]){
+            case "ohen":debuff_karta_objekt.hp-=5;console.log("ohen");break;
+            case "jed":debuff_karta_objekt.hp-=10;console.log("jed");break;
+            default:console.log("Chyba při ve funkci pouziti_abilitek. řádek 1184");break;
+        }
+    }
+    if(debuff_karta_objekt.hp<=0){
+        console.log("Dostalo se to sem");
+        let el = document.getElementById(debuff_karta_objekt.id);
+        let rodic = el.parentElement;
+        el.remove();
+
+        //Upravit, aby to fungovalo na hráče i protihráče.
+        if(rodic.classList.contains("protivnik_prazdne_misto")){ 
+        protihrac_prostredek_prazdne_misto.push(rodic.id); 
+
+        // Odstranění z pole (najdeme si index znovu, protože to mohla být tvoje nebo soupeřova karta)
+        let smazat_index = protihrac_prostredek_objekty_karty.findIndex(k => k.id === debuff_karta_objekt.id);
+        if(smazat_index > -1) protihrac_prostredek_objekty_karty.splice(smazat_index, 1);
+        }
+        else{
+            // Odstranění z pole (najdeme si index znovu, protože to mohla být tvoje nebo soupeřova karta)
+            let smazat_index = protihrac_prostredek_objekty_karty.findIndex(k => k.id === debuff_karta_objekt.id);
+            if(smazat_index > -1) protihrac_prostredek_objekty_karty.splice(smazat_index, 1);
+        }
+
+    }
+}
+}
+
+
+function prohledani_karet_uprostred_ability(){
+    if(hraje_hrac){
+        for(let i =0;i<protihrac_prostredek_objekty_karty.length;i++){
+            pouziti_abilitek(protihrac_prostredek_objekty_karty[i]);
+        }
+    }
+    else{
+        for(let i =0;i<hrac_prostredek_objekty_karty.length;i++){
+            pouziti_abilitek(hrac_prostredek_objekty_karty[i]);
+        }
+    }
+}
+
+//Fungování abilitek karet nademnou
