@@ -2,7 +2,7 @@ PRAVIDLA:
 ----------
 Maximální počet vyložených karet je 4
 Hráč má maximálně 5 karet
-Hráč i protihráč mají maximálně 3 spelly v inventáři
+Hráč i protihráč mají maximálně 4 spelly v inventáři
 
 Každá postava kromě kouzel má: HP, DMG, PTS, SEF, CLS
 ----------
@@ -10,7 +10,7 @@ HP  =             životy karty: kolik má karta životů, při HP <= 0 = karta 
 DMG =             útok: kolik životů karta ubere jiné
 POINTS =          body karty: poražení karty s větším PTS znamená více bodů pro výhru hry
 SPECIAL EFFECTS = speciální efekty: jed, pasivní lěčení, oslabení
-CLASS =           typ jednotky: mág, lehkooděnec, těžkooděnec, kouzla (mag > těžkooděnec > lehkooděnec > mag)      //možná ještě nějaký classy
+CLASS =           typ jednotky: Mage, Light, Heavy, Spell (Mage > Heavy > Light > Mage)      //možná ještě nějaký classy
 
 
 FÁZE KOLA:
