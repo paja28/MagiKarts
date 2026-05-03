@@ -143,11 +143,16 @@ body {
 /* =========================================
    UI PANELY A INFORMAČNÍ OKNA
    ========================================= */
-#hodiny { height: 5vh; width: 10vw; background-color: #EBE288; }
-#kola { height: 10vh; width: 10vw; background-color: #EBD688; }
-#body { height: 10vh; width: 10vw; background-color: #EBCA88; }
-#informace { height: 60vh; width: 10vw; background-color: #EBBC88; }
-#konecTahu { height: 15vh; width: 10vw; background-color: #EBAB88; }
+#hodiny { height: 5vh; width: 10vw; background-image: url("./Obrazky/informace1.png");
+    background-size: cover; }
+#kola { height: 10vh; width: 10vw; background-image: url("./Obrazky/informace2.png");
+    background-size: cover; }
+#body { height: 10vh; width: 10vw; background-image: url("./Obrazky/informace3.png");
+    background-size: cover;}
+#informace { height: 60vh; width: 10vw; background-image: url("./Obrazky/informace4.png");
+    background-size: cover; }
+#konecTahu { height: 15vh; width: 10vw; background-image: url("./Obrazky/informace5.png");
+    background-size: cover; }
 
 #informacni_okno {
     display: flex;
