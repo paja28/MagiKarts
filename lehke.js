@@ -16,7 +16,7 @@ var protihrac_inventar_objekty_karty = [];
 var protihrac_prostredek_objekty_karty = [];
 
 // Objekty
-var pole_charakteru_karet = [Lucistnik,Spartan,Mag_ohne,Fireball,Kopinik,Jedovy_sip,Kusnik,Paladin,Leceni,Lecitel];
+var pole_charakteru_karet = [Lucistnik,Spartan,Mag_ohne,Fireball,Kopinik,Jedovy_sip,Kusnik,Paladin,Leceni,Lecitel,Asasin,Nekromancer];
 
 var hrac_inventar_objekty_karty = [];
 var hrac_prostredek_objekty_karty = [];

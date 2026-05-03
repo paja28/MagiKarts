@@ -107,3 +107,36 @@ const Lucistnik = {
 	debuff:[],
 	vzdalenost: 3
 }
+const Asasin = {
+	hp: 20,
+	dmg: 20,
+	body: 3,
+	img: "Obrazky/asasin.png",
+	id:"",
+	trida:"Light",
+	ability:"",
+	debuff:[],
+	vzdalenost: 1
+}
+const Nekromancer = {
+	hp: 25,
+	dmg: 5,
+	body: 4,
+	img: "Obrazky/nekromancer.png",
+	id:"",
+	trida:"Magic",
+	ability:"",
+	debuff:[],
+	vzdalenost: 3
+}
+const Skeleton = {
+	hp: 10,
+	dmg: 10,
+	body: 1,
+	img: "Obrazky/kostlivec.png",
+	id:"",
+	trida:"Light",
+	ability:"",
+	debuff:[],
+	vzdalenost: 1
+}
