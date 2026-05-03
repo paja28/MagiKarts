@@ -1,0 +1,82 @@
+<!Doctype html>
+<html lang="cs">
+<head>
+    <link rel="stylesheet" href="lehke.css">
+    <script type="text/javascript" src="karty_objekty.js"></script>
+    <script type="text/javascript" src="lehke.js"></script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>MagiKarts -> Lehké</title>
+    <link rel="icon" type="image/gif" href="./Obrazky/logo.png">
+    
+</head>
+<body>
+    <div id="leva_strana">
+        <div id="container_protihrac_pocitadlo_karet">
+            <div id="pocitadlo_protihrac_text"></div>
+            <img src ="./Obrazky/pocitadlo.png"  id="protihrac_pocitadlo_karet">
+        </div>
+        <img id="pridavani_karet" src ="./Obrazky/pridavani_karet.png" alt="pridavani_karet_obrazek"onclick="pridani_karty(`hrac`)">
+        <div id="container_hrac_pocitadlo_karet">
+            <img id="hrac_pocitadlo_karet" src ="./Obrazky/pocitadlo.png">
+            <div id="pocitadlo_hrac_text"></div>
+        </div>
+    </div>
+    
+
+    <div id="herni_pole">
+
+<div id="protihracovy_karty">
+</div>
+
+<div id="pole_vykladani_protihrace">
+<div id="protihrac_pole_karta1" class="protivnik_prazdne_misto"></div>
+<div id="protihrac_pole_karta1_ability"  class="protihrac_misto_abilitky"></div>
+<div id="protihrac_pole_karta2" class="protivnik_prazdne_misto"></div>
+<div id="protihrac_pole_karta2_ability"  class="protihrac_misto_abilitky"></div>
+<div id="protihrac_pole_karta3" class="protivnik_prazdne_misto"></div>
+<div id="protihrac_pole_karta3_ability"  class="protihrac_misto_abilitky"></div>
+<div id="protihrac_pole_karta4" class="protivnik_prazdne_misto"></div>
+<div id="protihrac_pole_karta4_ability"  class="protihrac_misto_abilitky"></div>
+</div>
+
+<div id="pole_vykladani_hrace">
+<div id="hrac_pole_karta1" class="prazdne_misto"></div>
+<div id="hrac_pole_karta1_ability" class="hrac_misto_abilitky"></div>
+<div id="hrac_pole_karta2" class="prazdne_misto"></div>
+<div id="hrac_pole_karta2_ability" class="hrac_misto_abilitky"></div>
+<div id="hrac_pole_karta3" class="prazdne_misto"></div>
+<div id="hrac_pole_karta3_ability" class="hrac_misto_abilitky"></div>
+<div id="hrac_pole_karta4" class="prazdne_misto"></div>
+<div id="hrac_pole_karta4_ability" class="hrac_misto_abilitky"></div>
+</div>
+
+<div id="hracovy_karty">
+</div>
+
+    </div>
+        
+
+<div id="informacni_okno">
+<div id = "hodiny">
+    <b>Čas:</b>
+    <div id = "stopky" src = "cas.js">00:00:00</div>    
+</div>
+
+<div id = "kola">Kola</div>
+
+<div id = "body">Body
+    <br>
+    Protihráč body: <span id="protihrac_body">0</span>
+    <br>
+    Hráč body: <span id="hrac_body">0</span> 
+</div>
+
+<div id = informace>Informace</div>
+
+<div id="konecTahu" onclick="potvrzeni_tahu()">Potvrdit tah</div>
+</div>
+</body>
+</html>
+

@@ -1,0 +1,221 @@
+/* =========================================
+   ZÁKLADNÍ NASTAVENÍ A FONTY
+   ========================================= */
+@font-face {
+    font-family: pixel_font;
+    src: url("./fonts/grixel_kyrou_7_wide/Kyrou\ 7\ Wide\ Xtnd.ttf");
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
+body {
+    font-family: pixel_font;
+    font-size: 50%;
+    text-align: center;
+    display: grid;
+    grid-template-columns: 15% 70% 15%;
+    background-color: #d4c2b683;
+}
+
+/* =========================================
+   MŘÍŽKY A HERNÍ POLE
+   ========================================= */
+/* Společné nastavení pro všechny gridy s kartami */
+#protihracovy_karty, #hracovy_karty,
+#pole_vykladani_protihrace, #pole_vykladani_hrace {
+    display: grid;
+    justify-items: center; /* Karty budou uprostřed sloupců */
+    align-items: center;
+    width: 100%;
+    margin: 10px 0;
+    background-image: url("./Obrazky/pozadi.png");
+    background-size: contain;
+}
+
+/* 5 sloupců pro ruku */
+#protihracovy_karty, #hracovy_karty {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0px; 
+    height: 150px;
+}
+
+/* 4 sloupce pro vykládací pole */
+#pole_vykladani_protihrace, #pole_vykladani_hrace {
+    grid-template-columns: repeat(4, 1fr 0.9375fr);
+    width: 90%; 
+    gap: 15px 1px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#herni_pole {
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+}
+
+/* =========================================
+   SAMOTNÉ KARTY A PRÁZDNÁ MÍSTA
+   ========================================= */
+.protihrac_karty, .karty, .prazdne_misto, .protivnik_prazdne_misto {
+    width: 100%;
+    max-width: 100px;
+    aspect-ratio: 2 / 3; /* Udrží poměr stran */
+    height: auto;
+    object-fit: contain;
+}
+
+.protihrac_karty, .karty {
+    width: 100px;
+    height: 150px;
+}
+
+.prazdne_misto, .protivnik_prazdne_misto {
+    width: 100px;
+    height: 150px;
+    background-image: url("./Obrazky/prazdne_misto.png");
+    background-size: cover;
+    text-align: center;
+}
+
+#pridavani_karet {
+    width: 150px;
+    height: 225px;
+}
+
+/* Interakce a animace karet */
+.vysouvani_karet { transition: transform 0.5s; }
+.vysouvani_karet:hover { transform: translateY(-30px); }
+.vysouvani_karet_protihrace { transition: transform 0.5s; transform: translateY(30px); }
+.zakliknuta_karta { margin-top: -60px; }
+.clickable { cursor: pointer; }
+
+/* =========================================
+   SCHOPNOSTI (ABILITIES)
+   ========================================= */
+.protihrac_misto_abilitky, .hrac_misto_abilitky {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 93.75px;
+    height: 100%;
+    gap: 0px;
+    background-image: url("./Obrazky/ability_sloupec.png");
+    background-size: cover;
+}
+
+.ability_class {
+    width: 37.5px;
+    height: 37.5px;
+    place-self: center;
+}
+
+/* =========================================
+   POŘADÍ KARET (GRID ORDER)
+   ========================================= */
+/* Hráč - prostředek pořadí karet a abilitek */
+#hrac_pole_karta1 { order: 1; }
+#hrac_pole_karta1_ability { order: 2; }
+#hrac_pole_karta2 { order: 3; }
+#hrac_pole_karta2_ability { order: 4; }
+#hrac_pole_karta3 { order: 5; }
+#hrac_pole_karta3_ability { order: 6; }
+#hrac_pole_karta4 { order: 7; }
+#hrac_pole_karta4_ability { order: 8; }
+
+/* Protihráč - prostředek pořadí karet a abilitek */
+#protihrac_pole_karta1 { order: 1; }
+#protihrac_pole_karta1_ability { order: 2; }
+#protihrac_pole_karta2 { order: 3; }
+#protihrac_pole_karta2_ability { order: 4; }
+#protihrac_pole_karta3 { order: 5; }
+#protihrac_pole_karta3_ability { order: 6; }
+#protihrac_pole_karta4 { order: 7; }
+#protihrac_pole_karta4_ability { order: 8; }
+
+/* =========================================
+   UI PANELY A INFORMAČNÍ OKNA
+   ========================================= */
+#hodiny { height: 5vh; width: 10vw; background-image: url("./Obrazky/informace1.png");
+    background-size: cover; }
+#kola { height: 10vh; width: 10vw; background-image: url("./Obrazky/informace2.png");
+    background-size: cover; }
+#body { height: 10vh; width: 10vw; background-image: url("./Obrazky/informace3.png");
+    background-size: cover;}
+#informace { height: 60vh; width: 10vw; background-image: url("./Obrazky/informace4.png");
+    background-size: cover; }
+#konecTahu { height: 15vh; width: 10vw; background-image: url("./Obrazky/informace5.png");
+    background-size: cover; }
+
+#informacni_okno {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+/* =========================================
+   LEVÝ PANEL A POČÍTADLA (Oprava mezer a textu)
+   ========================================= */
+#leva_strana {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0; /* Jistota, že flexbox nepřidá žádné mezery */
+}
+
+/* Kontejnery pro počítadla */
+#container_protihrac_pocitadlo_karet, 
+#container_hrac_pocitadlo_karet {
+    position: relative;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    line-height: 0; /* Zabrání prázdnému místu z dědičnosti */
+}
+
+/* Samotné obrázky (odstranění nechtěných spodních mezer) */
+#pridavani_karet, 
+#protihrac_pocitadlo_karet, 
+#hrac_pocitadlo_karet {
+    display: block; 
+}
+
+#protihrac_pocitadlo_karet, #hrac_pocitadlo_karet {
+    width: 56.25px;
+    height: auto;
+}
+
+/* Spodní počítadlo otočíme */
+#hrac_pocitadlo_karet {
+    transform: rotate(180deg);
+}
+
+/* Zarovnání textu (čísel) přesně doprostřed měřičů */
+#pocitadlo_hrac_text, 
+#pocitadlo_protihrac_text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Matematicky přesný střed */
+    z-index: 10; /* Číslo bude vždy nad obrázkem */
+    line-height: normal; /* Vrátíme textu normální řádkování, aby nebyl spláclý */
+    margin: 0;
+}
+
+/* =========================================
+   RÁMEČKY
+   ========================================= */
+.prvni_ramecek { border: 4px solid blue; }
+.druhy_ramecek { border: 4px solid green; }
+.treti_ramecek { border: 4px solid yellow; }
+.protihrac_prvni_ramecek { border: 4px solid red; }
+.protihrac_druhy_ramecek { border: 4px solid orangered; }
+.protihrac_treti_ramecek { border: 4px solid orange; }
