@@ -100,7 +100,6 @@ window.onload = function() {
     spusteni_tahu=false;
     vybrane_karty_index = 0;
     document.getElementById("kola").innerHTML="Kola<br><br>Počet kol: "+pocet_kol;
-    console.log(document.getElementById("protihrac_pocitadlo_karet"));
     document.getElementById("pocitadlo_protihrac_text").innerHTML=pocet_karet_v_pakliku_protihrac;
     document.getElementById("pocitadlo_hrac_text").innerHTML=pocet_karet_v_pakliku_hrac;
 }
@@ -575,6 +574,12 @@ function proved_utok_ai(utocnik_objekt, obrance_objekt) {
         {
             ability_sloupec_el.children[0].remove();
         }
+
+        //Připisování bodů protihráčovy
+        let protihrac_body_int = Number(document.getElementById("protihrac_body").innerHTML);
+        protihrac_body_int += obrance_objekt.body;
+        document.getElementById("protihrac_body").innerHTML = protihrac_body_int;
+
         el.remove();
         
         // Hledání, ve kterém poli mrtvá karta byla a bezpečné uvolnění slotu
@@ -641,7 +646,9 @@ async function protihrac_random_tahy() {
         });
 
         let muze_utocit = pouzitelni_utocnici.length > 0;
-
+        if(muze_utocit){
+            //Tady jsem skončil
+        }
         // 2. Tvorba koše platných akcí
         let mozne_akce = [];
         if (muze_vylozit) mozne_akce.push(0);
@@ -774,13 +781,25 @@ function utok(karta_element_nebo_id) {
         return;
     }
 
+    smazani_ostatnich_fci();
+    let rodic_hrace = document.getElementById(utocnik_id).parentElement;
+    let cislo_rodice_hrace = parseInt(rodic_hrace.id[rodic_hrace.id.length - 1], 10);
+    let vzdalenost = utocici_karty_objekty[utocici_karty_objekty_index].vzdalenost-1;
     // Nastavíme karty protihráče jako cíle
+    if(utocici_karty_objekty[utocici_karty_objekty_index].trida ==="Spell"){
+        cislo_rodice_hrace = 2;
+    }
     protihrac_prostredek_objekty_karty.forEach(objekt => {
         let el = document.getElementById(objekt.id);
+        let rodic_protihrace = el.parentElement;
+        let cislo_rodice_protihrace = parseInt(rodic_protihrace.id[rodic_protihrace.id.length - 1], 10);
+        if (cislo_rodice_hrace - vzdalenost <= cislo_rodice_protihrace && 
+            cislo_rodice_hrace + vzdalenost >= cislo_rodice_protihrace) {
         if (el) {
             el.classList.add("clickable");
             el.onclick = function() { snizeni_hp(objekt.id); }; // Předáváme ID cíle
         }
+    }
     });
 }
 
@@ -816,6 +835,7 @@ function snizeni_hp(cil_id) {
 
             // Výpočet poškození / healu
                 cilovy_objekt.hp -= utocici_karty_objekty[utocici_karty_objekty_index].dmg*kamen_nuzky_papir(utocici_karty_objekty[utocici_karty_objekty_index],cilovy_objekt);
+            
             // Kontrola smrti karty
             if (cilovy_objekt.hp <= 0) {
                 let el = document.getElementById(spravne_id);
@@ -828,7 +848,11 @@ function snizeni_hp(cil_id) {
                     ability_sloupec_el.children[0].remove();
                 }
 
-
+                //přičtení bodů hráčovy
+                let hrac_body_int = Number(document.getElementById("hrac_body").innerHTML);
+                hrac_body_int += cilovy_objekt.body;
+                document.getElementById("hrac_body").innerHTML = hrac_body_int;
+                
                 //Smazání samotné postavy
                 el.remove();
                 protihrac_prostredek_prazdne_misto.push(rodic.id); 
@@ -837,7 +861,8 @@ function snizeni_hp(cil_id) {
                 let smazat_index = protihrac_prostredek_objekty_karty.findIndex(k => k.id === spravne_id);
                 if(smazat_index > -1) protihrac_prostredek_objekty_karty.splice(smazat_index, 1);
             }
-            //Vykoná se pokud karta nezemře, podemnout
+            //Nademnou se vykoná, když karta zemře
+            //Vykoná se pokud karta nezemře, podemnou
             //maže rámečky u karet, které nezemřely.
             else{
                 let cil_element = document.getElementById(spravne_id);
@@ -1073,7 +1098,7 @@ document.addEventListener('mouseover', (event) => {
         informace.innerHTML+="<br><br>Hráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>DMG:"+objekt_karta.dmg;
     else
         informace.innerHTML+="<br><br>Hráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>Heal:"+(-1*objekt_karta.dmg);
-    informace.innerHTML+="<br><br>Třída:"+objekt_karta.trida;
+    informace.innerHTML+="<br><br>Třída:"+objekt_karta.trida+"<br><br>Dosah: "+objekt_karta.vzdalenost+"<br><br>Body: "+objekt_karta.body;
   }
 
   //Psaní informací při najetí na protihráčovy karty
@@ -1090,7 +1115,7 @@ document.addEventListener('mouseover', (event) => {
         informace.innerHTML+="<br><br>Protihráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>DMG:"+objekt_karta.dmg;
     else
         informace.innerHTML+="<br><br>Protihráčova karta:<br><br>HP:"+objekt_karta.hp+"<br>Heal:"+(-1*objekt_karta.dmg);
-    informace.innerHTML+="<br><br>Třída:"+objekt_karta.trida;
+    informace.innerHTML+="<br><br>Třída:"+objekt_karta.trida+"<br><br>Dosah: "+objekt_karta.vzdalenost+"<br><br>Body: "+objekt_karta.body;
   }
 
 });
@@ -1137,9 +1162,21 @@ function healovani(karta_element_nebo_id) {
         return;
     }
 
+    
+    let rodic_hrace = document.getElementById(karta_healovani_id).parentElement;
+    let cislo_rodice_hrace = parseInt(rodic_hrace.id[rodic_hrace.id.length-1],10);
+    let vzdalenost = utocici_karty_objekty[utocici_karty_objekty_index].vzdalenost-1;
+    if(utocici_karty_objekty[utocici_karty_objekty_index].trida==="Spell")
+    {
+        cislo_rodice_hrace = 2;
+    }
     // Nastavíme TVOJE VLASTNÍ karty na stole jako cíle (pro heal)
     hrac_prostredek_objekty_karty.forEach(objekt => {
         let el = document.getElementById(objekt.id);
+        let rodic_hrace2 = el.parentElement;
+        let cislo_rodice_hrace2 = parseInt(rodic_hrace2.id[rodic_hrace2.id.length-1],10);
+        if(cislo_rodice_hrace-vzdalenost<=cislo_rodice_hrace2 &&
+           cislo_rodice_hrace+vzdalenost>=cislo_rodice_hrace2) {
         if (el) {
             el.classList.add("clickable");
             if(el.onclick===null)
@@ -1148,6 +1185,7 @@ function healovani(karta_element_nebo_id) {
             }
             el.onclick = function() { snizeni_hp(objekt.id); }; // Cíl je tvoje karta
         }
+    }        
     });
 } 
 
@@ -1279,6 +1317,18 @@ if(debuff_karta_objekt.debuff.length!=0){
         while(ability_sloupec_el.childElementCount>0)
         {
             ability_sloupec_el.children[0].remove();
+        }
+
+        //Přidání bodů, protihráčovi nebo hráčovi
+        if(el.classList.contains("protihrac_karty")){
+        let hrac_body_int = Number(document.getElementById("hrac_body").innerHTML);
+        hrac_body_int += debuff_karta_objekt.body;
+        document.getElementById("hrac_body").innerHTML = hrac_body_int;
+        }
+        else{
+        let protihrac_body_int = Number(document.getElementById("protihrac_body").innerHTML);
+        protihrac_body_int += debuff_karta_objekt.body;
+        document.getElementById("protihrac_body").innerHTML = protihrac_body_int;
         }
 
         //Smazání samotné postavy
