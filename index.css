@@ -1,0 +1,64 @@
+@font-face {
+    font-family: pixel_font;
+    src: url("./fonts/grixel_kyrou_7_wide/Kyrou\ 7\ Wide\ Xtnd.ttf");
+}
+
+body{
+    font-family:pixel_font;
+}
+header h1{
+    font-size:400%;
+    text-align: center;
+}
+hr{
+    border: 4px dashed rgb(0, 0, 0);
+}
+
+#singleplayer{
+    border:1px solid black;
+    display: grid;
+    place-items: center;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+#multiplayer{
+    border:1px solid black;
+    display: grid;
+    place-items: center;
+    grid-template-rows: 1fr;
+}
+
+section{
+    display: grid;
+    grid-template-rows: 3fr 1fr;
+    height: 60vh;
+    width:70vw;
+    place-self:center;
+}
+
+.uroven{
+    color:black;
+    text-decoration: none;
+    border:4px outset black;
+    border-radius: 10px;
+    height: 10vh;
+    width: 30vw;
+    text-align: center;
+    font-size:200%;
+}
+
+#lehka{
+    background-color:rgb(39, 181, 39);
+}
+
+#stredni{
+    background-color:rgb(255, 255, 90);
+}
+
+#tezka{
+    background-color:rgb(255, 87, 87);
+}
+
+#tlac_multiplayer{
+    background-color:rgb(130, 16, 130);
+}

@@ -1,64 +1,27 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html lang="cs">
-<head>
-    <link rel="stylesheet" href="karty_pole.css">
-    <script type="text/javascript" src="karty_objekty.js"></script>
-    <script type="text/javascript" src="zaklikavani_karet.js"></script>
-    <script type="text/javascript" src="cas.js"></script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>MagiKarts</title>
-    <link rel="icon" type="image/gif" href="./Obrazky/logo.png">
-    
-</head>
-<body>
-    <div id="leva_strana">
-    
-        <img id="pridavani_karet" src ="./Obrazky/pridavani_karet.png" alt="pridavani_karet_obrazek"onclick="pridani_karty(`hrac`)">
-    
-    </div>
-    
-
-    <div id="herni_pole">
-
-<div id="protihracovy_karty">
-</div>
-
-<div id="pole_vykladani_protihrace">
-<div id="protihrac_pole_karta1" class="protivnik_prazdne_misto"></div>
-<div id="protihrac_pole_karta2" class="protivnik_prazdne_misto"></div>
-<div id="protihrac_pole_karta3" class="protivnik_prazdne_misto"></div>
-<div id="protihrac_pole_karta4" class="protivnik_prazdne_misto"></div>
-</div>
-
-<div id="pole_vykladani_hrace">
-<div id="pole_karta1" class="prazdne_misto"></div>
-<div id="pole_karta2" class="prazdne_misto"></div>
-<div id="pole_karta3" class="prazdne_misto"></div>
-<div id="pole_karta4" class="prazdne_misto"></div>
-</div>
-
-<div id="hracovy_karty">
-</div>
-
-    </div>
-        
-
-<div id="informacni_okno">
-<div id = "hodiny">
-    <b>Čas:</b>
-    <div id = "stopky" src = "cas.js">00:00:00</div>    
-</div>
-
-<div id = "kola" src = "kola.js">Kola</div>
-
-<div id = "body" src = "kola.js">Body</div>
-
-<div id = informace>Informace</div>
-
-<div id="konecTahu" onclick="potvrzeni_tahu()">Konec</div>
-</div>
-</body>
+    <head>
+        <link rel="stylesheet" href="index.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Magikarts -> Úvod</title>
+        <link rel="icon" type="image/gif" href="./Obrazky/logo.png">
+    </head>
+    <body>
+        <header>
+            <h1>Magikarts</h1>
+        </header>
+        <hr>
+        <section>
+        <div id="singleplayer">
+            <a id="lehka" class="uroven" href="lehke.html">Lehká</a>
+            <a id="stredni" class="uroven" href="" onclick="alert('Tato úroveň ještě neexistuje, pracuje se na tom.')">Střední</a>
+            <a id="tezka" class="uroven" href="" onclick="alert('Tato úroveň ještě neexistuje, pracuje se na tom.')">Těžká</a>
+        </div>
+        <div id="multiplayer">
+            <a id="tlac_multiplayer" class="uroven" href="" onclick="alert('Multiplayer ještě neexistuje, začne se na něm pracovat, až budou funkční ostatní úrovně.')">Multiplayer</a>
+        </div>
+        </section>
+        <footer></footer>
+    </body>
 </html>
-
