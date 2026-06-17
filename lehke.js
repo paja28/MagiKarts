@@ -59,6 +59,7 @@ var index_protihrac_element_tahu = 0;
 //Pamět pro počítání karet v paklíku pro hráče i protihráče
 var pocet_karet_v_pakliku_hrac = 20;
 var pocet_karet_v_pakliku_protihrac = 20;
+var uhel_rucicky=0;
 // --- HLAVNÍ FUNKCE ---
 
 //Vygeneruje random karty na začátku tahu pro hráče a protihráče
@@ -207,21 +208,43 @@ function presunuti_karty(id_prazdneho_mista) {
     if(hraje_hrac){
     const presunuta_karta_element = document.getElementById(vybrane_karty[vybrane_karty_index]);
     const cilove_misto = document.getElementById(id_prazdneho_mista);
+    let napravo_nekromancer;
+    let nalevo_nekromancer;
+    console.log(cilove_misto);
     if (spusteni_tahu) {
         //if (zakliknuta_karta_id != null) {
 
         //Smazání rámečku kolem karet
         //Orámečkování vybrané karty a prázdného místa
+        let postava_img;
         switch (vybrane_karty_index) {
             case 0:
+                postava_img = presunuta_karta_element.src.substring(presunuta_karta_element.src.length-15);
+                 if(postava_img=="nekromancer.png")
+                {
+                napravo_nekromancer = nekromancer_misto_napravo(cilove_misto);
+                nalevo_nekromancer = nekromancer_misto_nalevo(cilove_misto);
+                }
                 cilove_misto.classList.remove("prvni_ramecek");
                 presunuta_karta_element.classList.remove("prvni_ramecek");
                 break;
             case 1:
+                postava_img = presunuta_karta_element.src.substring(presunuta_karta_element.src.length-15);
+                 if(postava_img=="nekromancer.png")
+                {
+                napravo_nekromancer = nekromancer_misto_napravo(cilove_misto);
+                nalevo_nekromancer = nekromancer_misto_nalevo(cilove_misto);
+                }
                 cilove_misto.classList.remove("druhy_ramecek");
                 presunuta_karta_element.classList.remove("druhy_ramecek");
                 break;
             case 2:
+                postava_img = presunuta_karta_element.src.substring(presunuta_karta_element.src.length-15);
+                 if(postava_img=="nekromancer.png")
+                {
+                napravo_nekromancer = nekromancer_misto_napravo(cilove_misto);
+                nalevo_nekromancer = nekromancer_misto_nalevo(cilove_misto);
+                }
                 cilove_misto.classList.remove("treti_ramecek");
                 presunuta_karta_element.classList.remove("treti_ramecek");
                 break;
@@ -271,6 +294,11 @@ function presunuti_karty(id_prazdneho_mista) {
         // Tvůj systém používá "zrušení prázdného místa" a vložení karty.
         // Aby se nerozbilo ID slotu, uděláme to takto:
         cilove_misto.appendChild(presunuta_karta_element);
+        postava_img = presunuta_karta_element.src.substring(presunuta_karta_element.src.length-15);
+        if(postava_img=="nekromancer.png")
+        {
+            nekromancer_ability(presunuta_karta_element,napravo_nekromancer,nalevo_nekromancer);
+        }
         cilove_misto.classList.remove("clickable");
         cilove_misto.onclick = null; // Už nejde kliknout jako na prázdné místo
         parent.remove();
@@ -311,7 +339,7 @@ function presunuti_karty(id_prazdneho_mista) {
             }
             //Kontrola, jestli hráč nekliká více kartama na již vybrané místo, kam se bude karta přesouvat
             if (cilove_misto.classList.contains("prvni_ramecek") || cilove_misto.classList.contains("druhy_ramecek") || cilove_misto.classList.contains("treti_ramecek")) {
-                console.log("Cílové místo je už používána, nejde znovu použít");
+                console.log("Cílové místo je už používáno, nejde znovu použít");
                 return;
             }
             //Kontrola, jestli hráč nekliká kartou na místo, kde se už karta vyskytuje
@@ -322,6 +350,7 @@ function presunuti_karty(id_prazdneho_mista) {
 
             //Začátek 
             pocet_tahu--;
+            posunuti_rucicky();
             document.getElementById("text_ukazatel_tahu").innerHTML = "Počet tahů: <br>"+pocet_tahu;
             document.getElementById("konecTahu").classList.add("clickable");
             if (prvni_tah == null) {
@@ -422,12 +451,14 @@ function pridani_karty(hrac_nebo_protihrac) {
 
             //Začátek
             pocet_tahu--;
+            posunuti_rucicky();
             document.getElementById("text_ukazatel_tahu").innerHTML = "Počet tahů: <br>"+pocet_tahu;
             pocet_karet_v_pakliku_hrac--;
             document.getElementById("pocitadlo_hrac_text").innerHTML = pocet_karet_v_pakliku_hrac;
             document.getElementById("konecTahu").classList.add("clickable");
             if (prvni_tah == null) {
                 prvni_tah = pridani_karty.bind(null, hrac_nebo_protihrac);
+
             }
             else if (druhy_tah == null) {
                 druhy_tah = pridani_karty.bind(null, hrac_nebo_protihrac);
@@ -562,6 +593,12 @@ function protihrac_presunuti_karty_vykonani(objekt_karty, slot_id) {
         let karta_el = document.getElementById(objekt_karty.id);
         karta_el.classList.remove("vysouvani_karet_protihrace"); // pokud tam ještě zbyla
         let slot_el = document.getElementById(slot_id);
+        /*postava_img = karta_el.src.substring(karta_el.src.length-15);
+        if(postava_img=="nekromancer.png")
+        {
+        napravo_nekromancer = nekromancer_misto_napravo(slot_el);
+        nalevo_nekromancer = nekromancer_misto_nalevo(slot_el);
+        }*/
         slot_el.appendChild(karta_el);
     }
 }
@@ -735,6 +772,7 @@ async function protihrac_random_tahy() {
         // 4. Výběr akce
         let akce = mozne_akce[Math.floor(Math.random() * mozne_akce.length)];
 
+        posunuti_rucicky();
         // 5. Zpracování akce a přidání do fronty
         if (akce === 0) {
             // --- VYLOŽENÍ KARTY ---
@@ -831,6 +869,7 @@ async function protihrac_random_tahy() {
 
     // Úklid rámečků
     odstran_vsechny_protihrac_ramecky();
+    posunuti_rucicky("protihrac_posledni");
 
     console.log("Protihráč dohrál.");
     pocet_kol++;
@@ -1017,6 +1056,7 @@ function snizeni_hp(cil_id) {
 
                 //Začátek
                 pocet_tahu--;
+                posunuti_rucicky();
                 document.getElementById("text_ukazatel_tahu").innerHTML = "Počet tahů: <br>"+pocet_tahu;
                 document.getElementById("konecTahu").classList.add("clickable");
                 let cil_element = document.getElementById(spravne_id);
@@ -1116,7 +1156,7 @@ function pauza(ms) {
 //Začne dělat hráčovy tahy po stisknutí tlačítka
 async function potvrzeni_tahu() {
     if (pocet_tahu < 3) {
-
+        posunuti_rucicky("potvrzeni_tahu");
         vybrane_karty_index = 0;  //Proto aby fungovalo dobře přesouvání karet;
 
         document.getElementById("konecTahu").classList.remove("clickable");    //Změna kurzoru při najetí na potvrzení tahu
@@ -1403,7 +1443,7 @@ function abilitky_karet(utocici_karta_objekt, cilova_karta_objekt) {
 }
 
 
-function pouziti_abilitek(debuff_karta_objekt) {
+function pouziti_debuffu(debuff_karta_objekt) {
     if (debuff_karta_objekt.debuff.length != 0) {
         for (let i = 0; i < debuff_karta_objekt.debuff.length; i++) {
             switch (debuff_karta_objekt.debuff[i]) {
@@ -1465,12 +1505,12 @@ function pouziti_abilitek(debuff_karta_objekt) {
 function prohledani_karet_uprostred_ability() {
     if (hraje_hrac) {
         for (let i = protihrac_prostredek_objekty_karty.length - 1; i >= 0; i--) {
-            pouziti_abilitek(protihrac_prostredek_objekty_karty[i]);
+            pouziti_debuffu(protihrac_prostredek_objekty_karty[i]);
         }
     }
     else {
         for (let i = hrac_prostredek_objekty_karty.length - 1; i >= 0; i--) {
-            pouziti_abilitek(hrac_prostredek_objekty_karty[i]);
+            pouziti_debuffu(hrac_prostredek_objekty_karty[i]);
         }
     }
 }
@@ -1545,3 +1585,73 @@ function Vytvoreni_krizku(){
     return krizek;
 }
 
+function posunuti_rucicky(misto_spusteni){
+    switch(misto_spusteni)
+    {
+        case "potvrzeni_tahu":
+                uhel_rucicky=180;break;
+        case "protihrac_posledni":
+                uhel_rucicky=0;break;
+
+        default: uhel_rucicky+=45;
+    }
+    document.getElementById("hodinova_rucicka").style.rotate=uhel_rucicky+"deg";
+}
+
+function nekromancer_ability(element_img,napravo,nalevo){
+    let id_rodice = element_img.parentElement.id;
+    let poradi_v_poli = id_rodice[element_img.parentElement.id.length-1];
+    let id_rodice_bez_cisla = id_rodice.substring(0,id_rodice.length-1);
+    if (parseInt(poradi_v_poli, 10) - 1 > 0 && 
+    document.getElementById(id_rodice_bez_cisla + (parseInt(poradi_v_poli, 10) - 1)).children.length === 0&&
+    nalevo){
+        let prazdne_misto = document.getElementById(id_rodice_bez_cisla+(parseInt(poradi_v_poli, 10) - 1));
+        let nova_karta_objekt = structuredClone(Skeleton);
+        nova_karta_objekt.id = vygeneruj_nove_id();
+        const img = document.createElement("img");
+        img.id = nova_karta_objekt.id;
+        img.src = nova_karta_objekt.img;
+        img.classList.add("karty","clickable");
+        hrac_prostredek_objekty_karty.push(nova_karta_objekt);//Hráč, nebo protihráč
+        img.onclick = function () { utok(this); };
+        prazdne_misto.appendChild(img);
+    }
+    if (parseInt(poradi_v_poli, 10) + 1< 5 && 
+       document.getElementById(id_rodice_bez_cisla + (parseInt(poradi_v_poli, 10) + 1)).children.length === 0&&
+        napravo){
+        let prazdne_misto = document.getElementById(id_rodice_bez_cisla+(parseInt(poradi_v_poli, 10) + 1));
+        let nova_karta_objekt = structuredClone(Skeleton);
+        nova_karta_objekt.id = vygeneruj_nove_id();
+        const img = document.createElement("img");
+        img.id = nova_karta_objekt.id;
+        img.src = nova_karta_objekt.img;
+        img.classList.add("karty","clickable");
+        hrac_prostredek_objekty_karty.push(nova_karta_objekt);
+        img.onclick = function () { utok(this); };
+        prazdne_misto.appendChild(img);
+    }
+}
+function nekromancer_misto_napravo(element_mista_pro_kartu){
+    let id_rodice = element_mista_pro_kartu.id;
+    let poradi_v_poli = id_rodice[element_mista_pro_kartu.id.length-1];
+    let id_rodice_bez_cisla = id_rodice.substring(0,id_rodice.length-1);
+    let prazdne_misto_napravo = document.getElementById(id_rodice_bez_cisla + (parseInt(poradi_v_poli, 10) + 1));
+    if((parseInt(poradi_v_poli, 10) + 1)>4)
+        return;
+        if (prazdne_misto_napravo.classList.contains("prvni_ramecek") || prazdne_misto_napravo.classList.contains("druhy_ramecek") || prazdne_misto_napravo.classList.contains("treti_ramecek")) {
+        return false;
+        }
+        return true;
+}
+function nekromancer_misto_nalevo(element_mista_pro_kartu){
+    let id_rodice = element_mista_pro_kartu.id;
+    let poradi_v_poli = id_rodice[element_mista_pro_kartu.id.length-1];
+    let id_rodice_bez_cisla = id_rodice.substring(0,id_rodice.length-1);
+    let prazdne_misto_napravo = document.getElementById(id_rodice_bez_cisla + (parseInt(poradi_v_poli, 10) - 1));
+    if((parseInt(poradi_v_poli, 10) - 1)<=0)
+        return;
+        if (prazdne_misto_napravo.classList.contains("prvni_ramecek") || prazdne_misto_napravo.classList.contains("druhy_ramecek") || prazdne_misto_napravo.classList.contains("treti_ramecek")) {
+        return false;
+        }
+        return true;
+}

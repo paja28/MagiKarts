@@ -258,3 +258,39 @@ body {
 .div_hrac_karty.zakliknuta_v_identu {
     transform: translateY(-30px);
 }
+
+/* Kontejner - vracíme ho vlevo nahoru */
+#faze_kola {
+    position: fixed;
+    top: 14vh;           /* Tvoje původní výška */
+    left: 7.5vw;         /* Přesný střed levého sloupce (který má 15% šířky) */
+    transform: translate(-50%, -50%); /* Vystředí celý kontejner na těchto souřadnicích */
+    display: grid;
+    place-items: center; /* Vše uvnitř bude přesně na středu přes sebe */
+    width: 10vw;         
+    z-index: 10;
+}
+
+/* Samotný ciferník */
+#hodiny_faze {
+    grid-area: 1 / 1;    
+    width: 100%;         
+    height: auto;
+}
+
+/* Ručička */
+#hodinova_rucicka {
+    grid-area: 1 / 1;    
+    width: 20%;          /* Můžeš upravit, 20 % odpovídá původním 2vw */
+    height: auto;
+    z-index: 5;
+    
+    /* Bod otáčení nastavíme na úplný spodek ručičky */
+    transform-origin: bottom center; 
+    
+    /* Tohle posune ručičku nahoru o polovinu její vlastní výšky. 
+       Díky tomu její úplný spodek přistane přesně na matematickém středu hodin! */
+    translate: 0 -50%; 
+    /* TOTO JE TEN MAGICKÝ ŘÁDEK */
+    transition: rotate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
