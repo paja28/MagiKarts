@@ -83,6 +83,7 @@ body {
     background-image: url("./Obrazky/prazdne_misto.png");
     background-size: cover;
     text-align: center;
+    position: relative; 
 }
 
 #pridavani_karet {
@@ -293,4 +294,23 @@ body {
     translate: 0 -50%; 
     /* TOTO JE TEN MAGICKÝ ŘÁDEK */
     transition: rotate 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.zruseni_tahu{
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    margin:0;
+    z-index: 10;
+    cursor:pointer;
+}
+
+.zruseni_tahu:hover{
+    transition: transform 0.1s ease-out;
+    transform: scale(1.45);
+}
+
+#pocet_tahu{
+    height:100px;
+    width: 100px;
 }
