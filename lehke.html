@@ -14,22 +14,22 @@
 <body>
     <div id="leva_strana">
         <div id="faze_kola">
-        <img id="hodinova_rucicka" src="./Obrazky/hodinova_rucicka.png">
-        <img id="hodiny_faze" src="./Obrazky/hodiny.png">
+            <img id="hodinova_rucicka" src="./Obrazky/hodinova_rucicka.png">
+            <img id="hodiny_faze" src="./Obrazky/hodiny.png">
         </div>
         <div id="container_protihrac_pocitadlo_karet">
             <div id="pocitadlo_protihrac_text"></div>
             <img src ="./Obrazky/pocitadlo.png"  id="protihrac_pocitadlo_karet">
         </div>
-        <img id="pridavani_karet" src ="./Obrazky/pridavani_karet.png" alt="pridavani_karet_obrazek"onclick="pridani_karty(`hrac`)">
+        <div id="obal_pridavani_karet" style="position: relative; display: inline-block;">
+            <img id="pridavani_karet" src="./Obrazky/pridavani_karet.png" alt="pridavani_karet_obrazek" onclick="pridani_karty('hrac')">
+        </div>
         <div id="container_hrac_pocitadlo_karet">
             <img id="hrac_pocitadlo_karet" src ="./Obrazky/pocitadlo.png">
             <div id="pocitadlo_hrac_text"></div>
         </div>
         <div id="container_ukazatel_tahu">
-            <svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
-                <circle r="45" cx="50" cy="50" fill="yellow" />
-            </svg>
+            <img id = "pocet_tahu" src="./Obrazky/pocet_tahu-export.png">
             <span id="text_ukazatel_tahu">Počet tahů: <br>3</span>
         </div>
     </div>
