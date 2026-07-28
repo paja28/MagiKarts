@@ -106,7 +106,7 @@ window.onload = function () {
     spusteni_tahu = false;
     vybrane_karty_index = 0;
     cislo_ramecku=1;
-    document.getElementById("kola").innerHTML = "Kola<br><br>Počet kol: " + pocet_kol;
+    document.getElementById("kola").innerHTML = "Počet kol: " + pocet_kol;
     document.getElementById("pocitadlo_protihrac_text").innerHTML = pocet_karet_v_pakliku_protihrac;
     document.getElementById("pocitadlo_hrac_text").innerHTML = pocet_karet_v_pakliku_hrac;
 }
@@ -878,7 +878,7 @@ async function protihrac_random_tahy() {
     pocet_kol++;
     hraje_hrac = true;
     pocet_tahu = 3;
-    document.getElementById("kola").innerHTML = "Kola<br><br>Počet kol: " + pocet_kol;
+    document.getElementById("kola").innerHTML = "Počet kol: " + pocet_kol;
 
     // Oživení tlačítka
     let btn = document.getElementById("pridavani_karet");
