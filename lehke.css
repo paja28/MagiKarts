@@ -10,13 +10,25 @@
     box-sizing: border-box;
     margin: 0; 
     padding: 0;
+    -webkit-tap-highlight-color: transparent; /* Odstraní modré bliknutí při klepnutí */
+    user-select: none;                         /* Zruší modré označení textu a obrázků */
+    -webkit-user-select: none;
 }
 
 html, body {
-    height: 100vh;
+    height: 100dvh; /* Změněno na dvh kvůli spodní liště */
     width: 100vw;
     overflow: hidden; 
 }
+
+img, .karty, .protihrac_karty, .clickable, .krizek, .zruseni_tahu {
+    -webkit-tap-highlight-color: transparent !important; /* Zruší modré probliknutí při klepnutí */
+    -webkit-touch-callout: none !important;              /* Zruší vyskakovací menu při dlouhém podržení prstu */
+    -webkit-user-select: none !important;                /* Zabrání označení obrázku (jako když označuješ text) */
+    user-select: none !important;
+    -moz-user-select: none !important;
+}
+
 
 body {
     font-family: pixel_font;
@@ -32,9 +44,9 @@ body {
    ========================================= */
 #herni_pole {
     width: 100%;
-    height: 100vh;
+    height: 100dvh; /* Změněno na dvh */
     display: grid;
-    grid-template-rows: 22vh 1fr 1fr 22vh; 
+    grid-template-rows: 22dvh 1fr 1fr 22dvh; /* Změněno na dvh */
     justify-items: center;
     align-items: center;
     padding: 0;
@@ -171,7 +183,7 @@ body {
     flex-direction: column;
     align-items: flex-end; 
     justify-content: flex-start;
-    height: 100vh;
+    height: 100dvh; /* Změněno na dvh */
 }
 
 #hodiny, #kola, #body, #informace, #konecTahu {
@@ -202,7 +214,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100vh;
+    height: 100dvh; /* Změněno na dvh */
     padding: 0;
 }
 
@@ -343,13 +355,14 @@ body {
 @media (max-width:768px) and (orientation:portrait) {
     
     #herni_pole {
-        grid-template-rows: 16vh 1fr 1fr 16vh;
+        grid-template-rows: 16dvh 1fr 1fr 16dvh; /* Změněno na dvh */
+        padding-bottom: env(safe-area-inset-bottom, 12px); /* Přidáno odsazení od spodní lišty */
     }
     
     #faze_kola, 
     #container_ukazatel_tahu {
         width: clamp(50px, 13vw, 85px);
-        height: 16vh;
+        height: 16dvh; /* Změněno na dvh */
     }
 
     .protihrac_karty, .karty {
@@ -366,12 +379,13 @@ body {
         width: clamp(50px, 15vw, 10vh);
     }
 
-    /* RUKA HRÁČE - min-height chrání pozadí v mobilní verzi */
+    /* RUKA HRÁČE */
     #hracovy_karty {
         display: flex;
         justify-content: center;
         align-items: flex-end;
         min-height: clamp(60px, 19.5vw, 13.5vh);
+        margin-bottom: 15px; /* Mírně zvedne karty nahoru nad případná tlačítka */
     }
     #hracovy_karty .div_hrac_karty {
         margin: 0 -15px; 
@@ -387,7 +401,7 @@ body {
     #hracovy_karty .div_hrac_karty:nth-child(4) { order: 1; transform: rotate(-30deg) translateY(20px); z-index: 5 !important; }
     #hracovy_karty .div_hrac_karty:nth-child(5) { order: 5; transform: rotate(30deg) translateY(20px); z-index: 1 !important; }
 
-    /* RUKA PROTIHRÁČE - min-height chrání pozadí v mobilní verzi */
+    /* RUKA PROTIHRÁČE */
     #protihracovy_karty {
         display: flex;
         justify-content: center;
@@ -456,7 +470,7 @@ body {
         align-items: center;
         color:white;
         font-size:20px;
-        height:100vh;
+        height:100dvh; /* Změněno na dvh */
         background-color:black;
         text-align: center;
         padding:20px;
