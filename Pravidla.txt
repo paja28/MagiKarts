@@ -3,27 +3,29 @@ PRAVIDLA:
 Maximální počet vyložených karet je 4
 Hráč má maximálně 5 karet
 Hráč i protihráč mají maximálně 4 spelly v inventáři
-
-Každá postava kromě kouzel má: HP, DMG, PTS, SEF, CLS
+Nasbírej co nejvíce bodů a vyhraj tak hru
+Každá postava kromě kouzel má: HP, DMG, BODY, SEF, CLS
 ----------
 HP  =             životy karty: kolik má karta životů, při HP <= 0 = karta mizí a připisují se body protihráči
 DMG =             útok: kolik životů karta ubere jiné
-POINTS =          body karty: poražení karty s větším PTS znamená více bodů pro výhru hry
-SPECIAL EFFECTS = speciální efekty: jed, pasivní lěčení, oslabení
-CLASS =           typ jednotky: Mage, Light, Heavy, Spell (Mage > Heavy > Light > Mage)      //možná ještě nějaký classy
+BODY =            body karty: poražení karty s větším množstvím bodů znamená více bodů pro výhru hry
+SPECIAL EFFECTS = speciální efekty: jed, oheň
+CLASS =           typ jednotky: Mage, Light, Heavy, Spell (Mage > Heavy > Light > Mage)
 
 
 FÁZE KOLA:
 ----------
-Každé kolo má hráč 3 možné tahy (minimálně jeden)
+Každé kolo má hráč 3 možné tahy (minimálně jeden musí zahrát)
 Každá akce (líznutí karty, vyložení karty, útok, léčení) odebírá 1 tah
-Efekty (oheň, jed, pasivní léčení) neubírájí body.
+Efekty (oheň, jed) neubírájí body.
 1. Hráč obdrží 3 tahy, provede akci
-2. Soupeř obdrží 2-4 body podle obtížnosti, provede akci
+2. Využijí se protihráčovy spelly
+3. Soupeř obdrží 3 tahy a provede akci
+4. Využijí se hráčovy spelly
 
 PRŮBĚH HRY:
 -----------
-Bude 10 kol, v každém se provedou fáze
+Hra má 10 kol, v každém se provedou 4 fáze
 Za zabití karet protivníka hráč obdrží jejich body
 Za zabití karet hráče protivník obdrží jejich body
-Až bude počet kol na nule, automaticky vyhrává hráč s vyššími body
+Po 10. kole hra končí, automaticky vyhrává hráč s vyššími body
