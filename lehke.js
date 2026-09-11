@@ -43,7 +43,6 @@ var utocici_karty_objekty_index = 0;
 //Pro přidávání karet u hráč
 var pomocne_pocitadlo_karet_v_inv = 0; //nemusí být správný počet karet v inventáři
 
-
 var pomocne_pole_pri_healovani = [];
 
 //Pomocné proměnnp pro protihráče
@@ -57,8 +56,8 @@ var protihrac_druhy_element_tahu_id = [];
 var index_protihrac_element_tahu = 0;
 
 //Pamět pro počítání karet v paklíku pro hráče i protihráče
-var pocet_karet_v_pakliku_hrac = 20;
-var pocet_karet_v_pakliku_protihrac = 20;
+var pocet_karet_v_pakliku_hrac = 10;
+var pocet_karet_v_pakliku_protihrac = 10;
 var uhel_rucicky=0;
 // --- HLAVNÍ FUNKCE ---
 
@@ -123,7 +122,7 @@ function nakliknuto(id) {
     if (!hraje_hrac && pocet_tahu <= 0) return;
     
     smazani_ostatnich_fci();
-    
+
     let karta = document.getElementById(id);
     let obal = karta.parentElement; // Rodičovský div (ten s transition)
     let prazdna_mista;
@@ -259,6 +258,7 @@ function presunuti_karty(id_prazdneho_mista, id_karty_pro_vykonani = null) {
             presunuta_karta_element.classList.remove("zakliknuta_karta", "vysouvani_karet");
             presunuta_karta_element.parentElement.classList.remove("div_hrac_karty_najete");
             presunuta_karta_element.classList.add("clickable");
+            Vytvoreni_healthbaru(objekt_karty,cilove_misto);
 
             if (objekt_karty.dmg > 0) {
                 presunuta_karta_element.onclick = function () { utok(this); };
@@ -544,10 +544,15 @@ function pridani_karty(hrac_nebo_protihrac) {
         div.classList.add("div_hrac_karty","div_hrac_karty_najete");
         div.appendChild(img);
         div.appendChild(Vytvoreni_krizku());
+        Vytvoreni_healthbaru(nova_karta_objekt,div);    //Vytvoření healthbaru a přidání healthbaru rovnou do divu
         kontejner.appendChild(div);
     }
     else{
-        kontejner.appendChild(img);
+        const div = document.createElement("div");
+        div.classList.add("div_protihrac_karty");
+        div.appendChild(img);
+        Vytvoreni_healthbaru(nova_karta_objekt,div);    //Vytvoření healthbaru a přidání healthbaru rovnou do divu
+        kontejner.appendChild(div);
     }
 }
 
@@ -567,8 +572,10 @@ function protihrac_presunuti_karty_vykonani(objekt_karty, slot_id) {
 
         // Přesun v grafice
         let karta_el = document.getElementById(objekt_karty.id);
+        karta_el.parentElement.remove();
         karta_el.classList.remove("vysouvani_karet_protihrace"); // pokud tam ještě zbyla
         let slot_el = document.getElementById(slot_id);
+        Vytvoreni_healthbaru(objekt_karty,slot_el);    //Vytvoření healthbaru a přidání healthbaru rovnou do divu
         slot_el.appendChild(karta_el);
         postava_img = karta_el.src.substring(karta_el.src.length-15);
         if(postava_img=="nekromancer.png")
@@ -591,39 +598,50 @@ function odstran_vsechny_protihrac_ramecky() {
 function proved_utok_ai(utocnik_objekt, obrance_objekt) {
     obrance_objekt.hp -= utocnik_objekt.dmg * kamen_nuzky_papir(utocnik_objekt, obrance_objekt);
 
-    if (obrance_objekt.hp <= 0) {
-        let el = document.getElementById(obrance_objekt.id);
-        if (!el) return;
+    //Tohle jsem přidal, abych si mohl ubírat hp v healthbaru
+    console.log(obrance_objekt.id);
+    console.log(document.getElementById(obrance_objekt.id));
+    if(document.getElementById(obrance_objekt.id)!=null){
+        let obrance_rodic_el = document.getElementById(obrance_objekt.id).parentElement;
+        let obrance_hp_text =obrance_rodic_el.querySelector(".healthbar-hp");
+        obrance_hp_text.innerText = obrance_objekt.hp;
 
-        let rodic = el.parentElement;
+        if (obrance_objekt.hp <= 0) {
+            let el = document.getElementById(obrance_objekt.id);
+            if (!el) return;
 
-        //Mazání abilitek, které může mít postava.
-        let ability_sloupec_el = document.getElementById(rodic.id + "_ability");
-        while (ability_sloupec_el.childElementCount > 0) {
-            ability_sloupec_el.children[0].remove();
-        }
+            let rodic = el.parentElement;
 
-        //Připisování bodů protihráčovy
-        let protihrac_body_int = Number(document.getElementById("protihrac_body").innerHTML);
-        protihrac_body_int += obrance_objekt.body;
-        document.getElementById("protihrac_body").innerHTML = protihrac_body_int;
+            //Mazání abilitek, které může mít postava.
+            let ability_sloupec_el = document.getElementById(rodic.id + "_ability");
+            while (ability_sloupec_el.childElementCount > 0) {
+                ability_sloupec_el.children[0].remove();
+            }
 
-        el.remove();
+            //Připisování bodů protihráčovy
+            let protihrac_body_int = Number(document.getElementById("protihrac_body").innerHTML);
+            protihrac_body_int += obrance_objekt.body;
+            document.getElementById("protihrac_body").innerHTML = protihrac_body_int;
 
-        // Hledání, ve kterém poli mrtvá karta byla a bezpečné uvolnění slotu
-        let index_hrac = hrac_prostredek_objekty_karty.findIndex(k => k.id === obrance_objekt.id);
-        if (index_hrac > -1) {
-            hrac_prostredek_objekty_karty.splice(index_hrac, 1);
-        } else {
-            let index_ai = protihrac_prostredek_objekty_karty.findIndex(k => k.id === obrance_objekt.id);
-            if (index_ai > -1) {
-                protihrac_prostredek_objekty_karty.splice(index_ai, 1);
-                protihrac_prostredek_prazdne_misto.push(rodic.id);
+            let rodic_el = el.parentElement;
+            while(rodic_el.childElementCount>0){
+                rodic_el.children[0].remove();
+            }
+            // Hledání, ve kterém poli mrtvá karta byla a bezpečné uvolnění slotu
+            let index_hrac = hrac_prostredek_objekty_karty.findIndex(k => k.id === obrance_objekt.id);
+            if (index_hrac > -1) {
+                hrac_prostredek_objekty_karty.splice(index_hrac, 1);
+            } else {
+                let index_ai = protihrac_prostredek_objekty_karty.findIndex(k => k.id === obrance_objekt.id);
+                if (index_ai > -1) {
+                    protihrac_prostredek_objekty_karty.splice(index_ai, 1);
+                    protihrac_prostredek_prazdne_misto.push(rodic.id);
+                }
             }
         }
-    }
-    else {
-        abilitky_karet(utocnik_objekt, obrance_objekt);
+        else {
+            abilitky_karet(utocnik_objekt, obrance_objekt);
+        }
     }
 }
 
@@ -803,7 +821,7 @@ async function protihrac_random_tahy() {
                 document.getElementById(cil_objekt.id).classList.add(trida_ramecku);
 
                 naplanovane_tahy.push(() => {
-                    karta_el.remove(); // Smazání spellu z grafiky
+                    karta_el.parentElement.remove(); // Smazání spellu z grafiky
                     let index = protihrac_inventar_objekty_karty.findIndex(k => k.id === vybrana_karta.id);
                     if (index > -1) protihrac_inventar_objekty_karty.splice(index, 1);
                     proved_utok_ai(vybrana_karta, cil_objekt);
@@ -876,6 +894,8 @@ async function protihrac_random_tahy() {
 
     console.log("Protihráč dohrál.");
     pocet_kol++;
+
+    if(pocet_kol<16){
     hraje_hrac = true;
     pocet_tahu = 3;
     document.getElementById("kola").innerHTML = "Počet kol: " + pocet_kol;
@@ -892,8 +912,17 @@ async function protihrac_random_tahy() {
         if (el) el.classList.add("clickable");
     });
 
+    let hracovy_karty_inv = document.getElementById("hracovy_karty");
+    for(let i = 0;i<hracovy_karty_inv.childElementCount;i++){
+        hracovy_karty_inv.children[i].appendChild(Vytvoreni_krizku());
+    }
+
     //vykonání abilitek na protihráčových kartách
     prohledani_karet_uprostred_ability();
+    }
+    else{
+        Konec_hry();
+    }
 }
 
 // --- BOJ ---
@@ -985,12 +1014,14 @@ function snizeni_hp(cil_id, utocnik_id_pro_vykonani = null) {
 
             // Výpočet poškození / healu
             cilovy_objekt.hp -= utocici_karty_objekty[utocici_karty_objekty_index].dmg * kamen_nuzky_papir(utocici_karty_objekty[utocici_karty_objekty_index], cilovy_objekt);
-
+            let karta_parent_el = document.getElementById(cilovy_objekt.id).parentElement;
+            let healthbar_hp = karta_parent_el.querySelector(".healthbar-hp");
+            healthbar_hp.innerText = cilovy_objekt.hp;
             // Kontrola smrti karty
             if (cilovy_objekt.hp <= 0) {
                 let el = document.getElementById(spravne_id);
                 let rodic = el.parentElement;
-
+                
                 let ability_sloupec_el = document.getElementById(rodic.id + "_ability");
                 while (ability_sloupec_el && ability_sloupec_el.childElementCount > 0) {
                     ability_sloupec_el.children[0].remove();
@@ -1000,7 +1031,9 @@ function snizeni_hp(cil_id, utocnik_id_pro_vykonani = null) {
                 hrac_body_int += cilovy_objekt.body;
                 document.getElementById("hrac_body").innerHTML = hrac_body_int;
 
-                if (el) el.remove();
+                while(rodic.childElementCount>0){
+                    rodic.children[0].remove();
+                }
                 protihrac_prostredek_prazdne_misto.push(rodic.id);
 
                 let smazat_index = protihrac_prostredek_objekty_karty.findIndex(k => k.id === spravne_id);
@@ -1048,8 +1081,6 @@ function snizeni_hp(cil_id, utocnik_id_pro_vykonani = null) {
     let utocici_karta_id = utocici_karty_objekty[utocici_karty_objekty_index].id;
     let utocici_karta_hrace = document.getElementById(utocici_karta_id);
     
-console.log(utocici_karta_hrace);
-console.log(utocici_karta_hrace.onclick);
 
     if (utocici_karta_hrace.onclick === null) {
         console.log("Karta už je používána.");
@@ -1069,6 +1100,41 @@ console.log(utocici_karta_hrace.onclick);
         utocici_karta_hrace.classList.add(prirazeny_ramecek);
     }
 
+console.log(utocici_karty_objekty[utocici_karty_objekty_index]);
+    if(utocici_karty_objekty[utocici_karty_objekty_index].dmg<0){//F-ce proto, že kdyby tady nebyla, tak když vyhealuji kartu, tak s ní pak nemohu útočit zároveň
+     let pomoc_prom = true;
+     console.log(utocici_karty_objekty);
+        for(let i =0;i<utocici_karty_objekty.length;i++){
+                if(utocici_karty_objekty[i]==null)
+                    utocici_karta_hrace[i]
+                else{
+            console.log(utocici_karty_objekty.length);
+            console.log(utocici_karty_objekty[i].id);
+            console.log(cil_element.id);
+
+
+            if(utocici_karty_objekty[i].id === cil_element.id){
+                pomoc_prom=false;
+                break;
+            }
+        }
+        }
+        if(pomoc_prom){
+            for(let i =0;i<hrac_prostredek_objekty_karty.length;i++){
+                if(hrac_prostredek_objekty_karty[i].id===cil_element.id)
+                {
+                    if(hrac_prostredek_objekty_karty[i].dmg >0)
+                        cil_element.onclick = function () { utok(this); };
+                    else
+                        cil_element.onclick = function () { healovani(this);};
+                }
+            }
+        }
+
+    }
+    //Konec f-ce
+
+
     // 2. AŽ TEĎ VYTVOŘÍME KŘÍŽEK A PŘEDÁME MU INFORMACI O RÁMEČKU
     let rodic_utocnika = utocici_karta_hrace.parentElement;
     rodic_utocnika.appendChild(Vytvoreni_zruseni_tahu("utok", prirazeny_ramecek));
@@ -1080,7 +1146,7 @@ console.log(utocici_karta_hrace.onclick);
 
     utocici_karta_hrace.onclick = null; 
     utocici_karta_hrace.classList.remove("clickable");
-
+    
     if (utocici_karty_objekty[utocici_karty_objekty_index].trida === "Spell") {
         let parent = utocici_karta_hrace.parentElement;
         
@@ -1171,8 +1237,13 @@ async function potvrzeni_tahu() {
 
         let hracuv_inventar_element = document.getElementById("hracovy_karty");
         for(let i =0;i<hracuv_inventar_element.childElementCount;i++){
-            if(hracuv_inventar_element.children[i].childElementCount>1)
-                hracuv_inventar_element.children[i].lastChild.remove();
+            if(hracuv_inventar_element.children[i].childElementCount>1){
+
+                let krizky = hracuv_inventar_element.children[i].querySelectorAll(".krizek");
+                krizky.forEach(krizek =>{
+                    krizek.remove();
+                })
+            }
         }
 
         //Hraje protihráč
@@ -1313,7 +1384,7 @@ function healovani(karta_element_nebo_id) {
             if (el) {
                 el.classList.add("clickable");
                 if (el.onclick === null) {
-                    pomocne_pole_pri_healovani.push(objekt);    //Tady je problém
+                    pomocne_pole_pri_healovani.push(objekt);    
                 }
                 el.onclick = function () { snizeni_hp(objekt.id); }; // Cíl je tvoje karta
             }
@@ -1434,10 +1505,15 @@ function abilitky_karet(utocici_karta_objekt, cilova_karta_objekt) {
 
 function pouziti_debuffu(debuff_karta_objekt) {
     if (debuff_karta_objekt.debuff.length != 0) {
+        let obrance_rodic_el = document.getElementById(debuff_karta_objekt.id).parentElement;
+        let obrance_hp_text =obrance_rodic_el.querySelector(".healthbar-hp");
         for (let i = 0; i < debuff_karta_objekt.debuff.length; i++) {
             switch (debuff_karta_objekt.debuff[i]) {
-                case "ohen": debuff_karta_objekt.hp -= 5;break;
-                case "jed": debuff_karta_objekt.hp -= 10;break;
+                case "ohen": debuff_karta_objekt.hp -= 5;
+                            obrance_hp_text.innerText = debuff_karta_objekt.hp;break;
+                case "jed": debuff_karta_objekt.hp -= 10;
+                            obrance_hp_text.innerText = debuff_karta_objekt.hp;break;
+                break;
                 default: console.log("Chyba při ve funkci pouziti_abilitek. řádek 1184"); break;
             }
         }
@@ -1464,7 +1540,9 @@ function pouziti_debuffu(debuff_karta_objekt) {
             }
 
             //Smazání samotné postavy
-            el.remove();
+            while(rodic.childElementCount>0){
+                rodic.children[0].remove();
+            }
 
             //Upravit, aby to fungovalo na hráče i protihráče.
             if (rodic.classList.contains("protivnik_prazdne_misto")) { //Protihráč
@@ -1613,6 +1691,7 @@ function nekromancer_ability(element_img,napravo,nalevo){
             protihrac_prostredek_objekty_karty.push(nova_karta_objekt);
             img.classList.add("protihrac_karty");
         }
+        Vytvoreni_healthbaru(nova_karta_objekt,prazdne_misto);
         prazdne_misto.appendChild(img);
     }
     if (parseInt(poradi_v_poli, 10) + 1< 5 && 
@@ -1633,6 +1712,7 @@ function nekromancer_ability(element_img,napravo,nalevo){
             protihrac_prostredek_objekty_karty.push(nova_karta_objekt);
             img.classList.add("protihrac_karty");
         }
+        Vytvoreni_healthbaru(nova_karta_objekt,prazdne_misto);
         prazdne_misto.appendChild(img);
     }
 }
@@ -1870,8 +1950,6 @@ function Vytvoreni_zruseni_tahu(akce, prirazen_ramecek = null) {
                             cilovy_element.onclick = function () { healovani(this); };
                         }
                     }
-                    console.log(cilovy_element);
-                    console.log(cilovy_element.onclick);
                     if(!byl_pouzit_krizek){
                         element_karty.parentElement.appendChild(Vytvoreni_krizku());
                     }
@@ -1880,7 +1958,6 @@ function Vytvoreni_zruseni_tahu(akce, prirazen_ramecek = null) {
                     // 1. Oživení karty v inventáři (vrácení animací a prokliku)
                     element_karty.classList.add("vysouvani_karet");
                     element_karty.onclick = function () { nakliknuto(this.id); };
-                    console.log(element_karty);
                     if (element_karty.parentElement) {
                         element_karty.parentElement.classList.add("div_hrac_karty_najete");
                     }
@@ -2032,6 +2109,70 @@ function Vytvoreni_zruseni_tahu(akce, prirazen_ramecek = null) {
         });
         
     }); // Konec události onclick pro zrušení tahu
-    
     return zruseni_tahu;
     } // Konec celé funkce Vytvoreni_zruseni_tahu
+
+function Vytvoreni_healthbaru(objekt_karty,div){
+    const span_hp = document.createElement("span");
+    const span_dmg_heal = document.createElement("span");
+    const container = document.createElement("div");
+    container.classList.add("healthbar");
+    
+    span_dmg_heal.classList.add("healthbar-dmg");
+    span_hp.classList.add("healthbar-hp");
+    span_hp.innerText=objekt_karty.hp;
+
+    if(objekt_karty.dmg>0)
+    {
+        container.style.backgroundImage="url('./Obrazky/healthbar-dmg.png')";   
+        span_dmg_heal.innerText=objekt_karty.dmg;
+    }
+    else{
+        container.style.backgroundImage="url('./Obrazky/healthbar-heal.png')";
+        span_dmg_heal.innerText=-objekt_karty.dmg;
+    }
+
+    container.appendChild(span_dmg_heal);
+    container.appendChild(span_hp);
+    div.appendChild(container);
+    
+}
+
+function Konec_hry(){
+    const konec = document.createElement("div");
+    konec.id = "konec";
+    const finalni_text = document.createElement("p");
+    finalni_text.id = "finalni_text";
+    const pokracovat = document.createElement("button");
+    pokracovat.id = "pokracovat_button";
+    pokracovat.textContent = "Znovu";
+    pokracovat.onclick = () => {
+        window.location.href = "lehke.html";
+    };
+    const zpet = document.createElement("button");
+    zpet.id = "zpet_button";
+    zpet.textContent="Zpět";
+    zpet.onclick = () => {
+        window.location.href="index.html";
+    };
+    let protihrac_body = Number(document.getElementById("protihrac_body").innerHTML);
+    let hrac_body = Number(document.getElementById("hrac_body").innerHTML);
+    if(hrac_body>protihrac_body)
+    {
+        finalni_text.innerHTML="Vyhrál&nbsp;jsi";
+        finalni_text.style.color="green";
+    }
+    else if(hrac_body==protihrac_body){
+        finalni_text.innerHTML="Remíza";
+        finalni_text.style.color="rgb(179, 179, 179)";
+    }
+    else
+    {
+        finalni_text.innerHTML="Prohrál&nbsp;jsi";
+        finalni_text.style.color="red";
+    }
+    konec.appendChild(finalni_text);
+    konec.appendChild(pokracovat);
+    konec.appendChild(zpet);
+    document.body.appendChild(konec);
+}

@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Magikarts -> Úvod</title>
         <link rel="icon" type="image/gif" href="./Obrazky/logo.png">
+        <script type = "text/javascript" src="index.js"></script>
     </head>
     <body>
         <header>
@@ -13,15 +14,45 @@
         </header>
         <hr>
         <section>
-        <div id="singleplayer">
-            <a id="lehka" class="uroven" href="lehke.html">Lehká</a>
-            <a id="stredni" class="uroven" href="" onclick="alert('Tato úroveň ještě neexistuje, pracuje se na tom.')">Střední</a>
-            <a id="tezka" class="uroven" href="" onclick="alert('Tato úroveň ještě neexistuje, pracuje se na tom.')">Těžká</a>
-        </div>
-        <div id="multiplayer">
-            <a id="tlac_multiplayer" class="uroven" href="" onclick="alert('Multiplayer ještě neexistuje, začne se na něm pracovat, až budou funkční ostatní úrovně.')">Multiplayer</a>
-        </div>
+            <div id="tabulka_pravidel"><button id="krizek">Zavřít</button>
+                <p>
+                <span>PRAVIDLA:</span>
+                -------------------
+                Maximální počet vyložených karet je 4
+                Hráč má maximálně 5 karet
+                Hráč i protihráč mají maximálně 4 spelly v inventáři
+                Nasbírej co nejvíce bodů a vyhraj tak hru
+                Každá postava kromě kouzel má: HP, DMG, BODY, SEF, CLS
+                ---------------------
+                HP  =             životy karty: kolik má karta životů, při HP &lt;= 0 = karta mizí a připisují se body protihráči
+                DMG =             útok: kolik životů karta ubere jiné
+                BODY =            body karty: poražení karty s větším množstvím bodů znamená více bodů pro výhru hry
+                SPECIAL EFFECTS = speciální efekty: jed, oheň
+                CLASS =           typ jednotky: Mage, Light, Heavy, Spell (Mage > Heavy > Light > Mage)
+
+
+                <span>FÁZE KOLA:</span>
+                -------------------
+                Každé kolo má hráč 3 možné tahy (minimálně jeden musí zahrát)
+                Každá akce (líznutí karty, vyložení karty, útok, léčení) odebírá 1 tah
+                Efekty (oheň, jed) neubírájí body.
+                1. Hráč obdrží 3 tahy, provede akci
+                2. Využijí se protihráčovy spelly
+                3. Soupeř obdrží 3 tahy a provede akci
+                4. Využijí se hráčovy spelly
+
+                <span>PRŮBĚH HRY:</span>
+                ---------------------
+                Hra má 10 kol, v každém se provedou 4 fáze
+                Za zabití karet protivníka hráč obdrží jejich body
+                Za zabití karet hráče protivník obdrží jejich body
+                Po 10. kole hra končí, automaticky vyhrává hráč s vyššími body
+                </p>
+            </div>
+            <a id="hrat" href="lehke.html">Hrát</a>
+            <button id="pravidla" title="Pravidla hry">Pravidla</button>
+            <a id="napady" href="http://localhost:8000/napady.html" title="Máš nějaký zajímavý nápad co přidat do hry? Nebo něco, co se ti naopak nelíbí? Dej vědět :D">Nápady</a>
         </section>
-        <footer></footer>
+        <footer>Vytvořili: Pavel Dvořák a Oliver Götz</footer>
     </body>
 </html>
