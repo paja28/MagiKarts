@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <link rel="stylesheet" href="napady.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Magikarts -> Nápady</title>
+        <link rel="icon" type="image/gif" href="./Obrazky/logo.png">
+    </head>
+    <body>
+        <header>
+            <h1>Magikarts</h1>
+        </header>
+
+        <hr>
+
+        <section>
+            <p>Máš nějaký zajímavý nápad, čím by se dala zlepšit hra, nebo ti naopak přijde něco na hře špatné?</p>
+            <p>Dej nám vědět a pokud budeme mít čas a přijde nám to zajímavé, tak to do hry zkusíme přidat.</p>
+            <form action="zpracuj_napad.php" method="POST">
+                <fieldset>
+                    <legend>Nápady</legend>
+                    <label for="napad_pole">Zadej, co bys na hře změnil/přidal</label>
+                    <textarea id="napad_pole" name="napad_pole" placeholder="Něco zajímavého :D" required maxlength="1000" rows="8"></textarea>
+
+                    <input type="text" name="website" style="display:none" tabindex="-1" autocomplete="off">
+
+                    <button type="submit">Odeslat nápad</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <footer>Vytvořili: Pavel Dvořák a Oliver Götz</footer>
+    </body>
+</html>

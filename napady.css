@@ -1,0 +1,21 @@
+@font-face {
+    font-family: pixel_font;
+    src: url("./fonts/grixel_kyrou_7_wide/Kyrou\ 7\ Wide\ Xtnd.ttf");
+}
+
+body{
+    font-family:pixel_font;
+    text-align: center;
+}
+
+#napad_pole{
+    display:block;
+}
+
+fieldset{
+    display:flex;
+    place-self:center;
+    width: 80vw;
+    flex-direction:column;
+    padding:3%;
+}

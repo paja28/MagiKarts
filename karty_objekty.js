@@ -7,7 +7,8 @@ const Spartan = {
 	trida:"Light",
 	ability:"",
 	debuff:[],
-	vzdalenost: 1
+	vzdalenost: 1,
+	nazev: "spartan"
 }
 const Mag_ohne = {
 	hp: 30,
@@ -18,7 +19,8 @@ const Mag_ohne = {
 	trida:"Magic",
 	ability:"ohen",
 	debuff:[],
-	vzdalenost: 2
+	vzdalenost: 2,
+	nazev: "mag_ohne"
 }
 const Fireball = {
 	hp:0,
@@ -29,7 +31,8 @@ const Fireball = {
 	trida:"Spell",
 	ability:"ohen",
 	debuff:[],
-	vzdalenost: 4
+	vzdalenost: 4,
+	nazev: "fireball"
 }
 const Kopinik = {
 	hp:40,
@@ -40,7 +43,8 @@ const Kopinik = {
 	trida:"Heavy",
 	ability:"",
 	debuff:[],
-	vzdalenost: 2
+	vzdalenost: 2,
+	nazev: "kopinik"
 }
 const Jedovy_sip = {
 	hp:0,
@@ -51,7 +55,8 @@ const Jedovy_sip = {
 	trida:"Spell",
 	ability:"jed",
 	debuff:[],
-	vzdalenost: 4
+	vzdalenost: 4,
+	nazev: "jedovy_sip"
 }
 const Kusnik = {
 	hp:30,
@@ -62,7 +67,8 @@ const Kusnik = {
 	trida:"Heavy",
 	ability:"",
 	debuff:[],
-	vzdalenost: 3
+	vzdalenost: 3,
+	nazev: "kusnik"
 }
 const Paladin = {
 	hp:60,
@@ -73,7 +79,8 @@ const Paladin = {
 	trida:"Heavy",
 	ability:"",
 	debuff:[],
-	vzdalenost: 1
+	vzdalenost: 1,
+	nazev: "paladin"
 }
 const Leceni = {
 	hp:0,
@@ -83,7 +90,8 @@ const Leceni = {
 	trida:"Spell",
 	ability:"",
 	debuff:[],
-	vzdalenost: 4
+	vzdalenost: 4,
+	nazev: "leceni"
 }
 const Lecitel = {
 	hp:20,
@@ -94,7 +102,8 @@ const Lecitel = {
 	trida:"Magic",
 	ability:"",
 	debuff:[],
-	vzdalenost: 2
+	vzdalenost: 2,
+	nazev: "lecitel"
 }
 const Lucistnik = {
 	hp: 25,
@@ -105,7 +114,8 @@ const Lucistnik = {
 	trida:"Light",
 	ability:"",
 	debuff:[],
-	vzdalenost: 3
+	vzdalenost: 3,
+	nazev: "lucistnik"
 }
 const Asasin = {
 	hp: 20,
@@ -116,7 +126,8 @@ const Asasin = {
 	trida:"Light",
 	ability:"",
 	debuff:[],
-	vzdalenost: 1
+	vzdalenost: 1,
+	nazev: "asasin"
 }
 const Nekromancer = {
 	hp: 25,
@@ -127,7 +138,8 @@ const Nekromancer = {
 	trida:"Magic",
 	ability:"",
 	debuff:[],
-	vzdalenost: 3
+	vzdalenost: 3,
+	nazev: "nekromancer"
 }
 const Skeleton = {
 	hp: 10,
@@ -138,5 +150,6 @@ const Skeleton = {
 	trida:"Light",
 	ability:"",
 	debuff:[],
-	vzdalenost: 1
+	vzdalenost: 1,
+	nazev: "skeleton"
 }

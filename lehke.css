@@ -137,6 +137,109 @@ body {
     column-gap: calc(100%/15);
 }
 
+#finalni_text {
+    /* Responsive font, který nepřeteče z horní poloviny */
+    font-size: clamp(1.2rem, 3.5vw, 3rem); 
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+#pokracovat_button {
+    width: 60%;
+    height: 45%;
+    background-color: green;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    /* Vycentrování tlačítka v jeho buňce */
+    justify-self: center;
+    align-self: center;
+    font-size: clamp(0.6rem,3.5vw,3rem);
+}
+
+#zpet_button {
+    width: 60%;
+    height: 45%;
+    background-color: rgb(220, 59, 59);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    /* Vycentrování tlačítka v jeho buňce */
+    justify-self: center;
+    align-self: center;
+    font-size: clamp(0.6rem,3.5vw,3rem);
+}
+
+#zpet_button:hover{
+    background-color: rgb(255, 93, 93);
+}
+
+#pokracovat_button:hover{
+    background-color:rgb(42, 150, 42);
+}
+
+#konec {
+    width: 50vw;
+    aspect-ratio: 3 / 2;
+    background-image: url('./Obrazky/Konec_hry.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    
+    border: none;
+    outline: none;
+    
+    /* Rozdělení na 2 sloupce a 2 stejně vysoké řádky (50% a 50%) */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 15;
+    
+    animation-duration: 2s;
+    animation-name: posun;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+/* 1. element: horní polovina */
+#konec > *:nth-child(1) {
+    grid-column: 1 / -1;
+    grid-row: 1;
+}
+
+/* 2. element: levá dolní polovina */
+#konec > *:nth-child(2) {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+/* 3. element: pravá dolní polovina */
+#konec > *:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+@keyframes posun {
+    0% {
+        transform: translate(-50%, calc(-50% - 100vh));
+    }
+    70% {
+        transform: translate(-50%, calc(-50% + 5vh));
+    }
+    100% {
+        transform: translate(-50%, -50%);
+    }
+}
+
 .ability_class {
     width: 85%; 
     height: 85%;
@@ -150,7 +253,14 @@ body {
     display: block;
     margin: 0 auto;
 }
+.div_protihrac_karty{
+    width:auto;
+    height: auto;
+    position: relative;
+    margin: 0 -15px; 
+    transform-origin: bottom center;
 
+}
 .vysouvani_karet_protihrace { transition: transform 0.5s; transform: translateY(30px); }
 .clickable { cursor: pointer; }
 
@@ -199,6 +309,7 @@ body {
     line-height: 1.25;
     text-align: center;
     word-break: break-word;
+    color:rgb(207, 207, 207);
 }
 
 #hodiny { height: 5vh; background-image: url("./Obrazky/informace1.png"); }
@@ -312,9 +423,9 @@ body {
 /* =========================================
    7. EFEKTY A HOVERY
    ========================================= */
-.prvni_ramecek { outline: 4px solid blue; }
-.druhy_ramecek { outline: 4px solid green; }
-.treti_ramecek { outline: 4px solid yellow; }
+.prvni_ramecek { outline: 4px solid rgb(89, 0, 255); }
+.druhy_ramecek { outline: 4px solid #0404bd; }
+.treti_ramecek { outline: 4px solid rgb(63, 143, 255); }
 .protihrac_prvni_ramecek { outline: 4px solid red; }
 .protihrac_druhy_ramecek { outline: 4px solid orangered; }
 .protihrac_treti_ramecek { outline: 4px solid orange; }
@@ -349,6 +460,39 @@ body {
 .div_hrac_karty_najete:hover { z-index: 10 !important; }
 .div_hrac_karty.zakliknuta_v_identu { z-index: 9 !important; }
 
+.healthbar{
+    position: absolute;
+    place-self:center;
+    top:-9%;
+    width:75%;
+    height: 20%;
+    transform-origin: center bottom;
+    transform: translate(-50%, -50%); 
+    right:-25%;
+    background-size:cover;
+    background-repeat: no-repeat;
+    z-index:5;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    padding-left:6.7777777%;
+    padding-right:6.7777777%;
+}
+
+.healthbar-hp{
+text-align:center;
+
+}
+.healthbar-dmg{
+position: relative;
+text-align:center;
+}
+
+#konecTahu:hover{
+    color:white;
+    text-decoration:overline;
+}
 /* =========================================
    8. MEDIA QUERIES (MOBIL)
    ========================================= */
@@ -359,6 +503,10 @@ body {
         padding-bottom: env(safe-area-inset-bottom, 12px); /* Přidáno odsazení od spodní lišty */
     }
     
+    .healthbar-dmg, .healthbar-hp{
+        font-size: clamp(5.5px,0.5vw,10px);
+    }
+
     #faze_kola, 
     #container_ukazatel_tahu {
         width: clamp(50px, 13vw, 85px);
@@ -414,11 +562,11 @@ body {
         position: relative;
         box-shadow: 0 0 8px rgba(0,0,0,0.4);
     }
-    #protihracovy_karty .protihrac_karty:nth-child(1) { order: 3; transform: rotate(0deg) translateY(0px); z-index: 3 !important; }
-    #protihracovy_karty .protihrac_karty:nth-child(2) { order: 2; transform: rotate(15deg) translateY(-5px); z-index: 4 !important; }
-    #protihracovy_karty .protihrac_karty:nth-child(3) { order: 4; transform: rotate(-15deg) translateY(-5px); z-index: 2 !important; }
-    #protihracovy_karty .protihrac_karty:nth-child(4) { order: 1; transform: rotate(30deg) translateY(-20px); z-index: 5 !important; }
-    #protihracovy_karty .protihrac_karty:nth-child(5) { order: 5; transform: rotate(-30deg) translateY(-20px); z-index: 1 !important; }
+    #protihracovy_karty .div_protihrac_karty:nth-child(1) { order: 3; transform: rotate(0deg) translateY(0px); z-index: 3 !important; }
+    #protihracovy_karty .div_protihrac_karty:nth-child(2) { order: 2; transform: rotate(15deg) translateY(-5px); z-index: 4 !important; }
+    #protihracovy_karty .div_protihrac_karty:nth-child(3) { order: 4; transform: rotate(-15deg) translateY(-5px); z-index: 2 !important; }
+    #protihracovy_karty .div_protihrac_karty:nth-child(4) { order: 1; transform: rotate(30deg) translateY(-20px); z-index: 5 !important; }
+    #protihracovy_karty .div_protihrac_karty:nth-child(5) { order: 5; transform: rotate(-30deg) translateY(-20px); z-index: 1 !important; }
 
     #pole_vykladani_hrace, #pole_vykladani_protihrace {
         grid-template-columns: repeat(4, 1fr); 
